@@ -3,4 +3,5 @@ export interface UserPrecondictions {
     firstYear: number;
     lastYear: number;
     ageOfFirstYear: number;
+    ageOfCurrentYear: number;
 }

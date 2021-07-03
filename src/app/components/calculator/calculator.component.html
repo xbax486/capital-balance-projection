@@ -21,7 +21,14 @@
             [(ngModel)]="user.precondictions.startBalance"
             #startBalance="ngModel"
             required
+            [disabled]="true"
           />
+        </div>
+        <div
+          class="alert alert-danger"
+          *ngIf="user.precondictions.startBalance < 0"
+        >
+          Start balance of the first year should not be a negative number!
         </div>
       </div>
       <div class="form-group col-lg-3 col-md-6">
@@ -29,7 +36,7 @@
         <div class="input-group">
           <input
             type="number"
-            min="0"
+            min="18"
             class="form-control"
             id="ageOfFirstYear"
             name="ageOfFirstYear"
@@ -37,6 +44,12 @@
             #ageOfFirstYear="ngModel"
             required
           />
+        </div>
+        <div
+          class="alert alert-danger"
+          *ngIf="user.precondictions.ageOfFirstYear < 18"
+        >
+          The age in the first year must be at least 18!
         </div>
       </div>
       <div class="form-group col-lg-3 col-md-6">
@@ -48,10 +61,23 @@
             class="form-control"
             id="firstYear"
             name="firstYear"
+            [class.range-invalid]="
+              user.precondictions.firstYear > user.precondictions.lastYear
+            "
             [(ngModel)]="user.precondictions.firstYear"
             #firstYear="ngModel"
             required
           />
+        </div>
+        <div
+          class="alert alert-danger"
+          *ngIf="
+            user.precondictions.firstYear < 2020 ||
+            user.precondictions.firstYear > user.precondictions.lastYear
+          "
+        >
+          Please enter the first year from 2020 and it must not be later than
+          the last year!
         </div>
       </div>
       <div class="form-group col-lg-3 col-md-6">
@@ -63,10 +89,23 @@
             class="form-control"
             id="lastYear"
             name="lastYear"
+            [class.range-invalid]="
+              user.precondictions.firstYear > user.precondictions.lastYear
+            "
             [(ngModel)]="user.precondictions.lastYear"
             #lastYear="ngModel"
             required
           />
+          <div
+            class="alert alert-danger"
+            *ngIf="
+              user.precondictions.lastYear < 2020 ||
+              user.precondictions.firstYear > user.precondictions.lastYear
+            "
+          >
+            Please enter the last year from 2020 and it must not be earlier than
+            the first year!
+          </div>
         </div>
       </div>
     </div>
@@ -96,6 +135,9 @@
             required
           />
         </div>
+        <div class="alert alert-danger" *ngIf="user.inputs.salary < 0">
+          The salary should not be a negative number!
+        </div>
       </div>
       <div class="form-group col-md-6">
         <label for="contributionRate">Contribution Rate</label>
@@ -114,6 +156,12 @@
           <div class="input-group-append">
             <span class="input-group-text">%</span>
           </div>
+        </div>
+        <div
+          class="alert alert-danger"
+          *ngIf="user.inputs.contributionRate < 0"
+        >
+          The contribution rate should not be a negative number!
         </div>
       </div>
     </div>
@@ -136,6 +184,9 @@
             <span class="input-group-text">%</span>
           </div>
         </div>
+        <div class="alert alert-danger" *ngIf="user.inputs.inflationRate < 0">
+          The inflation rate should not be a negative number!
+        </div>
       </div>
       <div class="form-group col-md-6">
         <label for="earningsRate">Earnings rate</label>
@@ -145,7 +196,7 @@
             min="0"
             class="form-control"
             id="earningsRate"
-            placeholder="Please enter the earnings of the user"
+            placeholder="Please enter the earnings rate of the user"
             name="earningsRate"
             [(ngModel)]="user.inputs.earningsRate"
             #earningsRate="ngModel"
@@ -154,6 +205,9 @@
           <div class="input-group-append">
             <span class="input-group-text">%</span>
           </div>
+        </div>
+        <div class="alert alert-danger" *ngIf="user.inputs.earningsRate < 0">
+          The earnings rate should not be a negative number!
         </div>
       </div>
     </div>
@@ -176,6 +230,9 @@
             <span class="input-group-text">%</span>
           </div>
         </div>
+        <div class="alert alert-danger" *ngIf="user.inputs.feesRate < 0">
+          The fees rate should not be a negative number!
+        </div>
       </div>
       <div class="form-group col-md-6">
         <label for="taxRate">Tax rate</label>
@@ -194,6 +251,9 @@
           <div class="input-group-append">
             <span class="input-group-text">%</span>
           </div>
+        </div>
+        <div class="alert alert-danger" *ngIf="user.inputs.taxRate < 0">
+          The tax rate should not be a negative number!
         </div>
       </div>
     </div>
@@ -216,9 +276,21 @@
             <span class="input-group-text">%</span>
           </div>
         </div>
+        <div class="alert alert-danger" *ngIf="user.inputs.withdrawalRate < 0">
+          The withdrawal rate should not be a negative number!
+        </div>
       </div>
     </div>
   </fieldset>
-  <button type="submit" class="btn btn-primary">Submit</button>
+  <button
+    type="submit"
+    class="btn btn-primary"
+    [disabled]="
+      calculatorForm.form.invalid ||
+      user.precondictions.firstYear > user.precondictions.lastYear
+    "
+  >
+    Submit
+  </button>
 </form>
 <app-line-chart [balance]="balance" [years]="years"></app-line-chart>

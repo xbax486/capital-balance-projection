@@ -14,7 +14,8 @@ export class CalculatorComponent implements OnInit {
       startBalance: 300000,
       firstYear: 2020,
       lastYear: 2020,
-      ageOfFirstYear: 45
+      ageOfFirstYear: 45,
+      ageOfCurrentYear: 45
     },
     inputs: {
       salary: 100000,
@@ -39,6 +40,7 @@ export class CalculatorComponent implements OnInit {
   public years: string[] = [];
 
   private readonly RATE_PERCENTAGE = 100;
+  private readonly RETIREMENT_AGE = 66;
 
   constructor() {}
 
@@ -51,7 +53,8 @@ export class CalculatorComponent implements OnInit {
   }
 
   getContributions(year: number, user: User) {
-    user.outputs.contributions = year >= 22 ? 0 : user.inputs.salary * this.toPercentage(user.inputs.contributionRate) * Math.pow(1 + this.toPercentage(user.inputs.inflationRate), year - 1);
+    user.outputs.contributions = this.user.precondictions.ageOfCurrentYear >= this.RETIREMENT_AGE ? 
+      0 : user.inputs.salary * this.toPercentage(user.inputs.contributionRate) * Math.pow(1 + this.toPercentage(user.inputs.inflationRate), year - 1);
     return user.outputs.contributions;
   }
 
@@ -74,7 +77,8 @@ export class CalculatorComponent implements OnInit {
 
   getWithdrawals(year: number, user: User) {
     let startBalance = this.getStartBalance(year, user);
-    user.outputs.withdrawals = year <= 21 ? 0 : startBalance * this.toPercentage(user.inputs.withdrawalRate);
+    user.outputs.withdrawals = this.user.precondictions.ageOfCurrentYear < this.RETIREMENT_AGE ? 
+      0 : startBalance * this.toPercentage(user.inputs.withdrawalRate);
     return user.outputs.withdrawals;
   }
 
@@ -98,6 +102,7 @@ export class CalculatorComponent implements OnInit {
     let endAge = details.precondictions.lastYear - details.precondictions.firstYear + details.precondictions.ageOfFirstYear;
     for(var index = startAge; index <= endAge; index++) {
       let year = index - 44;
+      this.user.precondictions.ageOfCurrentYear = index;
       this.getStartBalance(year, this.user);
       this.getContributions(year, this.user);
       this.getEarnings(year, this.user);
