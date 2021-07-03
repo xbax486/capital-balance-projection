@@ -1,0 +1,223 @@
+<form (ngSubmit)="onSubmit(calculatorForm)" #calculatorForm="ngForm">
+  <fieldset
+    class="border p-3 mb-4"
+    ngModelGroup="precondictions"
+    #precondictionsCtrl="ngModelGroup"
+  >
+    <legend class="w-auto">Precondictions</legend>
+    <div class="form-row">
+      <div class="form-group col-lg-3 col-md-6">
+        <label for="startBalance">First Year Start Balance</label>
+        <div class="input-group">
+          <div class="input-group-prepend">
+            <span class="input-group-text">$</span>
+          </div>
+          <input
+            type="number"
+            min="0"
+            class="form-control"
+            id="startBalance"
+            name="startBalance"
+            [(ngModel)]="user.precondictions.startBalance"
+            #startBalance="ngModel"
+            required
+          />
+        </div>
+      </div>
+      <div class="form-group col-lg-3 col-md-6">
+        <label for="ageOfFirstYear">Age of first year</label>
+        <div class="input-group">
+          <input
+            type="number"
+            min="0"
+            class="form-control"
+            id="ageOfFirstYear"
+            name="ageOfFirstYear"
+            [(ngModel)]="user.precondictions.ageOfFirstYear"
+            #ageOfFirstYear="ngModel"
+            required
+          />
+        </div>
+      </div>
+      <div class="form-group col-lg-3 col-md-6">
+        <label for="firstYear">First Year</label>
+        <div class="input-group">
+          <input
+            type="number"
+            min="2020"
+            class="form-control"
+            id="firstYear"
+            name="firstYear"
+            [(ngModel)]="user.precondictions.firstYear"
+            #firstYear="ngModel"
+            required
+          />
+        </div>
+      </div>
+      <div class="form-group col-lg-3 col-md-6">
+        <label for="lastYear">Last Year</label>
+        <div class="input-group">
+          <input
+            type="number"
+            min="2020"
+            class="form-control"
+            id="lastYear"
+            name="lastYear"
+            [(ngModel)]="user.precondictions.lastYear"
+            #lastYear="ngModel"
+            required
+          />
+        </div>
+      </div>
+    </div>
+  </fieldset>
+  <fieldset
+    class="border p-3 mb-4"
+    ngModelGroup="inputs"
+    #inputsCtrl="ngModelGroup"
+  >
+    <legend class="w-auto">Inputs</legend>
+    <div class="form-row">
+      <div class="form-group col-md-6">
+        <label for="salary">Salary</label>
+        <div class="input-group">
+          <div class="input-group-prepend">
+            <span class="input-group-text">$</span>
+          </div>
+          <input
+            type="number"
+            min="0"
+            class="form-control"
+            id="salary"
+            placeholder="Please enter the salary of the user"
+            name="salary"
+            [(ngModel)]="user.inputs.salary"
+            #salary="ngModel"
+            required
+          />
+        </div>
+      </div>
+      <div class="form-group col-md-6">
+        <label for="contributionRate">Contribution Rate</label>
+        <div class="input-group">
+          <input
+            type="number"
+            min="0"
+            class="form-control"
+            id="contributionRate"
+            placeholder="Please enter the contribution rate of the user"
+            name="contributionRate"
+            [(ngModel)]="user.inputs.contributionRate"
+            #contributionRate="ngModel"
+            required
+          />
+          <div class="input-group-append">
+            <span class="input-group-text">%</span>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="form-row">
+      <div class="form-group col-md-6">
+        <label for="inflationRate">Inflation Rate</label>
+        <div class="input-group">
+          <input
+            type="number"
+            min="0"
+            class="form-control"
+            id="inflationRate"
+            placeholder="Please enter the inflation rate of the user"
+            name="inflationRate"
+            [(ngModel)]="user.inputs.inflationRate"
+            #inflationRate="ngModel"
+            required
+          />
+          <div class="input-group-append">
+            <span class="input-group-text">%</span>
+          </div>
+        </div>
+      </div>
+      <div class="form-group col-md-6">
+        <label for="earningsRate">Earnings rate</label>
+        <div class="input-group">
+          <input
+            type="number"
+            min="0"
+            class="form-control"
+            id="earningsRate"
+            placeholder="Please enter the earnings of the user"
+            name="earningsRate"
+            [(ngModel)]="user.inputs.earningsRate"
+            #earningsRate="ngModel"
+            required
+          />
+          <div class="input-group-append">
+            <span class="input-group-text">%</span>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="form-row">
+      <div class="form-group col-md-6">
+        <label for="feesRate">Fees rate</label>
+        <div class="input-group">
+          <input
+            type="number"
+            min="0"
+            class="form-control"
+            id="feesRate"
+            placeholder="Please enter the fees rate of the user"
+            name="feesRate"
+            [(ngModel)]="user.inputs.feesRate"
+            #feesRate="ngModel"
+            required
+          />
+          <div class="input-group-append">
+            <span class="input-group-text">%</span>
+          </div>
+        </div>
+      </div>
+      <div class="form-group col-md-6">
+        <label for="taxRate">Tax rate</label>
+        <div class="input-group">
+          <input
+            type="number"
+            min="0"
+            class="form-control"
+            id="taxRate"
+            placeholder="Please enter the tax rate of the user"
+            name="taxRate"
+            [(ngModel)]="user.inputs.taxRate"
+            #taxRate="ngModel"
+            required
+          />
+          <div class="input-group-append">
+            <span class="input-group-text">%</span>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="form-row">
+      <div class="form-group col-md-6">
+        <label for="withdrawalRate">Withdrawal rate</label>
+        <div class="input-group">
+          <input
+            type="number"
+            min="0"
+            class="form-control"
+            id="withdrawalRate"
+            placeholder="Please enter the withdrawal rate of the user"
+            name="withdrawalRate"
+            [(ngModel)]="user.inputs.withdrawalRate"
+            #withdrawalRate="ngModel"
+            required
+          />
+          <div class="input-group-append">
+            <span class="input-group-text">%</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </fieldset>
+  <button type="submit" class="btn btn-primary">Submit</button>
+</form>
