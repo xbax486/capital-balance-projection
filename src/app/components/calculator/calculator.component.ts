@@ -47,9 +47,7 @@ export class CalculatorComponent implements OnInit {
   onSubmit(calculatorForm: NgForm) {
     this.balance = [];
     this.years = [];
-    this.calCulate(calculatorForm.form.value);
-    console.log('balance', this.balance);
-    console.log('years', this.years);
+    this.calculate(calculatorForm.form.value);
   }
 
   getContributions(year: number, user: User) {
@@ -95,7 +93,7 @@ export class CalculatorComponent implements OnInit {
     return year == 1 ? user.precondictions.startBalance : user.outputs.startBalance;
   }
 
-  private calCulate(details: CalculatorFormDetails) {
+  private calculate(details: CalculatorFormDetails) {
     let startAge = details.precondictions.ageOfFirstYear;
     let endAge = details.precondictions.lastYear - details.precondictions.firstYear + details.precondictions.ageOfFirstYear;
     for(var index = startAge; index <= endAge; index++) {
