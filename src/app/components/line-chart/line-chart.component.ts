@@ -20,29 +20,31 @@ export class LineChartComponent implements OnInit, OnChanges {
   @ViewChild('myCanvas', { static: false })
   myCanvas!: ElementRef;
 
+  public context!: CanvasRenderingContext2D;
   private borderColor: string = '#157DEC';
   private title: string = 'Capital Balance Projection';
+  private chart: any;
 
   constructor() {}
 
   ngOnInit(): void {}
 
-  public context!: CanvasRenderingContext2D;
-
   ngAfterViewInit(): void {
     this.context = this.myCanvas.nativeElement.getContext('2d');
+    this.drawChart();
   }
 
   ngOnChanges(changes: SimpleChanges): void {
     this.balance = changes.balance.currentValue;
     this.years = changes.years.currentValue;
     if (this.balance.length > 0) {
+      this.chart.destroy();
       this.drawChart();
     }
   }
 
   private drawChart() {
-    new Chart(this.context, {
+    this.chart = new Chart(this.context, {
       type: 'line',
       data: {
         labels: this.years,
@@ -77,7 +79,10 @@ export class LineChartComponent implements OnInit, OnChanges {
             },
           ],
         },
+        tooltips: {
+          mode: 'point'
+        }
       },
-    });
+    })
   }
 }
