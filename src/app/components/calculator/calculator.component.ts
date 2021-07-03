@@ -35,6 +35,16 @@ export class CalculatorComponent implements OnInit {
       tax: 0,
       withdrawals: 0,
       endBalance: 0,
+    },
+    calculationDetails: {
+      ages: [],
+      startBalance: [],
+      contributions: [],
+      earnings: [],
+      fees: [],
+      tax: [],
+      withdrawals: [],
+      endBalance: []
     }
   };
   public balance: number[] = [];
@@ -47,8 +57,7 @@ export class CalculatorComponent implements OnInit {
   ngOnInit(): void {}
 
   onSubmit(calculatorForm: NgForm) {
-    this.balance = [];
-    this.years = [];
+    this.resetAllDataArrays();
     this.calculate(calculatorForm.form.value);
   }
 
@@ -103,16 +112,30 @@ export class CalculatorComponent implements OnInit {
     for(var index = startAge; index <= endAge; index++) {
       let year = index - 44;
       this.user.precondictions.ageOfCurrentYear = index;
-      this.getStartBalance(year, this.user);
-      this.getContributions(year, this.user);
-      this.getEarnings(year, this.user);
-      this.getFees(year, this.user);
-      this.getTax(this.user);
-      this.getWithdrawals(year, this.user);
-      this.getEndBalance(year, this.user);
+      this.user.calculationDetails.ages.push(index);
+      this.user.calculationDetails.startBalance.push(Math.round(this.getStartBalance(year, this.user)));
+      this.user.calculationDetails.contributions.push(Math.round(this.getContributions(year, this.user)));
+      this.user.calculationDetails.earnings.push(Math.round(this.getEarnings(year, this.user)));
+      this.user.calculationDetails.fees.push(Math.round(this.getFees(year, this.user)));
+      this.user.calculationDetails.tax.push(Math.round(this.getTax(this.user)));
+      this.user.calculationDetails.withdrawals.push(Math.round(this.getWithdrawals(year, this.user)));
+      this.user.calculationDetails.endBalance.push(Math.round(this.getEndBalance(year, this.user)));
       this.balance.push(Math.round(this.user.outputs.startBalance));
       this.years.push((details.precondictions.firstYear + year - 1).toString());
     }
+  }
+
+  private resetAllDataArrays() {
+    this.balance = [];
+    this.years = [];
+    this.user.calculationDetails.ages = [];
+    this.user.calculationDetails.startBalance = [];
+    this.user.calculationDetails.contributions = [];
+    this.user.calculationDetails.earnings = [];
+    this.user.calculationDetails.fees = [];
+    this.user.calculationDetails.tax = [];
+    this.user.calculationDetails.withdrawals = [];
+    this.user.calculationDetails.endBalance = [];
   }
 }
 

@@ -22,7 +22,6 @@ export class LineChartComponent implements OnInit, OnChanges {
 
   public context!: CanvasRenderingContext2D;
   private borderColor: string = '#157DEC';
-  private title: string = 'Capital Balance Projection';
   private chart: any;
 
   constructor() {}
@@ -64,9 +63,7 @@ export class LineChartComponent implements OnInit, OnChanges {
           display: false,
         },
         title: {
-          display: true,
-          fontSize: 16,
-          text: this.title,
+          display: false
         },
         scales: {
           yAxes: [
