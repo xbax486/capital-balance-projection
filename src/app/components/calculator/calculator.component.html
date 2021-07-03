@@ -21,7 +21,7 @@
             [(ngModel)]="user.precondictions.startBalance"
             #startBalance="ngModel"
             required
-            [disabled]="true"
+            readonly
           />
         </div>
         <div
@@ -43,6 +43,7 @@
             [(ngModel)]="user.precondictions.ageOfFirstYear"
             #ageOfFirstYear="ngModel"
             required
+            readonly
           />
         </div>
         <div
@@ -67,6 +68,7 @@
             [(ngModel)]="user.precondictions.firstYear"
             #firstYear="ngModel"
             required
+            readonly
           />
         </div>
         <div
@@ -95,6 +97,7 @@
             [(ngModel)]="user.precondictions.lastYear"
             #lastYear="ngModel"
             required
+            readonly
           />
           <div
             class="alert alert-danger"
@@ -280,6 +283,34 @@
           The withdrawal rate should not be a negative number!
         </div>
       </div>
+      <div class="form-group col-md-6">
+        <label for="retirementAge">Retirement age</label>
+        <div class="input-group">
+          <input
+            type="number"
+            [min]="user.precondictions.ageOfFirstYear"
+            class="form-control"
+            id="retirementAge"
+            placeholder="Please enter the retirement age of the user"
+            name="retirementAge"
+            [class.retirement-age-invalid]="
+              user.inputs.retirementAge <= user.precondictions.ageOfFirstYear
+            "
+            [(ngModel)]="user.inputs.retirementAge"
+            #retirementAge="ngModel"
+            required
+          />
+        </div>
+        <div
+          class="alert alert-danger"
+          *ngIf="
+            user.inputs.retirementAge <= user.precondictions.ageOfFirstYear
+          "
+        >
+          The retirement age must be greater than the age of the first year in
+          capital balance projection!
+        </div>
+      </div>
     </div>
   </fieldset>
   <button
@@ -287,7 +318,8 @@
     class="btn btn-primary"
     [disabled]="
       calculatorForm.form.invalid ||
-      user.precondictions.firstYear > user.precondictions.lastYear
+      user.precondictions.firstYear > user.precondictions.lastYear ||
+      user.inputs.retirementAge <= user.precondictions.ageOfFirstYear
     "
   >
     Submit

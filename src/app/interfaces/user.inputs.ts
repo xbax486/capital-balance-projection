@@ -6,4 +6,5 @@ export interface UserInputs {
     feesRate: number;
     taxRate: number;
     withdrawalRate: number;
+    retirementAge: number;
   }
