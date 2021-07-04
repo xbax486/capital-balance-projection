@@ -1,5 +1,4 @@
 input.ng-invalid.ng-touched,
-input.range-invalid,
 input.retirement-age-invalid {
   border: 1px solid #dc3545;
 }

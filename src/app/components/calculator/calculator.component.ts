@@ -1,9 +1,12 @@
+import { UserPrecondictions } from './../../interfaces/user.precondictions';
 import { Component } from '@angular/core';
 import { NgForm } from '@angular/forms';
 import { User } from '../../interfaces/user';
 import { CalculatorFormDetails } from '../../interfaces/calculator.form.details';
 import { CalculationDetails } from 'src/app/interfaces/calculation.details';
 import { DataProcessService } from './../../services/data-process.service';
+import { DataFetchService } from "./../../services/data-fetch.service";
+import { ToastService } from "./../../services/toast.service";
 
 @Component({
   selector: 'app-calculator',
@@ -11,6 +14,7 @@ import { DataProcessService } from './../../services/data-process.service';
   styleUrls: ['./calculator.component.css'],
 })
 export class CalculatorComponent {
+  public userPrecondictionsFetched = false;
   public details: CalculationDetails = {
     ages: [],
     startBalance: [],
@@ -23,11 +27,11 @@ export class CalculatorComponent {
   };
   public user: User = {
     precondictions: {
-      startBalance: 300000,
-      firstYear: 2020,
-      lastYear: 2070,
-      ageOfFirstYear: 45,
-      ageOfCurrentYear: 45
+      startBalance: 0,
+      firstYear: 0,
+      lastYear: 0,
+      ageOfFirstYear: 0,
+      ageOfCurrentYear: 0
     },
     inputs: {
       salary: 100000,
@@ -53,7 +57,13 @@ export class CalculatorComponent {
   public balance: number[] = [];
   public years: string[] = [];
 
-  constructor(private dataProcessService: DataProcessService) {}
+  constructor(
+    private dataProcessService: DataProcessService, 
+    private dataFetchService: DataFetchService, 
+    private toastService: ToastService,
+    ) {
+    this.fetchUserPrecondictions();
+  }
 
   onSubmit(calculatorForm: NgForm) {
     this.resetAllDataArrays();
@@ -131,6 +141,18 @@ export class CalculatorComponent {
     this.user.calculationDetails.tax = [];
     this.user.calculationDetails.withdrawals = [];
     this.user.calculationDetails.endBalance = [];
+  }
+
+  private fetchUserPrecondictions() {
+    this.dataFetchService.userPrecondictions$.subscribe(
+      (userPrecondictions: UserPrecondictions) => {
+        this.userPrecondictionsFetched = true;
+        this.user.precondictions = userPrecondictions;
+      },
+      (error) =>{
+        this.toastService.onErrorCall('Fail to fetch precondictions. Please contact administrator.')
+      }
+    );
   }
 }
 
