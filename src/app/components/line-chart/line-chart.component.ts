@@ -1,20 +1,19 @@
 import {
   Component,
   Input,
-  OnInit,
   OnChanges,
-  SimpleChanges,
   ViewChild,
   ElementRef,
 } from '@angular/core';
 import { Chart } from 'chart.js';
+import { DataProcessService } from 'src/app/services/data-process.service';
 
 @Component({
   selector: 'app-line-chart',
   templateUrl: './line-chart.component.html',
   styleUrls: ['./line-chart.component.css'],
 })
-export class LineChartComponent implements OnInit, OnChanges {
+export class LineChartComponent implements OnChanges {
   @Input() balance: number[] = [];
   @Input() years: string[] = [];
   @ViewChild('myCanvas', { static: false })
@@ -24,16 +23,14 @@ export class LineChartComponent implements OnInit, OnChanges {
   private borderColor: string = '#157DEC';
   private chart: any;
 
-  constructor() {}
-
-  ngOnInit(): void {}
+  constructor(private dataProcessService: DataProcessService) {}
 
   ngAfterViewInit(): void {
     this.context = this.myCanvas.nativeElement.getContext('2d');
     this.drawChart();
   }
 
-  ngOnChanges(changes: SimpleChanges): void {
+  ngOnChanges(changes: any): void {
     this.balance = changes.balance.currentValue;
     this.years = changes.years.currentValue;
     if (this.balance.length > 0) {
@@ -43,6 +40,7 @@ export class LineChartComponent implements OnInit, OnChanges {
   }
 
   private drawChart() {
+    let dataProcessService = this.dataProcessService;
     this.chart = new Chart(this.context, {
       type: 'line',
       data: {
@@ -69,8 +67,8 @@ export class LineChartComponent implements OnInit, OnChanges {
           yAxes: [
             {
               ticks: {
-                callback: function (label, index, labels) {
-                  return new Intl.NumberFormat('en-US', {style: 'currency', currency: 'USD', maximumFractionDigits: 0}).format(+label);
+                callback: function (label) {
+                  return dataProcessService.formatCurrency(+label);
                 },
               }
             },

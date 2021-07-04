@@ -1,12 +1,13 @@
-import { Component, OnInit, Input } from '@angular/core';
+import { Component, Input } from '@angular/core';
 import { CalculationDetails } from '../../interfaces/calculation.details';
+import { DataProcessService } from 'src/app/services/data-process.service';
 
 @Component({
   selector: 'app-details-table',
   templateUrl: './details-table.component.html',
   styleUrls: ['./details-table.component.css'],
 })
-export class DetailsTableComponent implements OnInit {
+export class DetailsTableComponent {
   @Input() details: CalculationDetails = {
     ages: [],
     startBalance: [],
@@ -15,11 +16,14 @@ export class DetailsTableComponent implements OnInit {
     fees: [],
     tax: [],
     withdrawals: [],
-    endBalance: []
+    endBalance: [],
   };
   @Input() years: string[] = [];
 
-  constructor() {}
+  constructor(private dataProcessService: DataProcessService) {}
 
-  ngOnInit(): void {}
+  public formatData(data: number) {
+    return this.dataProcessService.formatCurrency(data);
+  }
 }
+

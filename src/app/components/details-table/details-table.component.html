@@ -19,56 +19,49 @@
       <tr>
         <td>Start Balance</td>
         <td *ngFor="let startBalance of details.startBalance">
-          <span class="data-prefix">$</span>
-          <span class="data-value">{{ startBalance }}</span>
+          <span class="data-value">{{ this.formatData(startBalance) }}</span>
         </td>
       </tr>
       <tr>
         <td>Contributions</td>
         <td *ngFor="let contribution of details.contributions">
-          <span class="data-prefix">$</span>
           <span class="data-value" *ngIf="contribution == 0">-</span>
           <span class="data-value" *ngIf="contribution > 0">
-            {{ contribution }}
+            {{ this.formatData(contribution) }}
           </span>
         </td>
       </tr>
       <tr>
         <td>Earnings</td>
         <td *ngFor="let earning of details.earnings">
-          <span class="data-prefix">$</span>
-          <span class="data-value">{{ earning }}</span>
+          <span class="data-value">{{ this.formatData(earning) }}</span>
         </td>
       </tr>
       <tr>
         <td>Fees</td>
         <td *ngFor="let fee of details.fees">
-          <span class="data-prefix">$</span>
-          <span class="data-value">{{ fee }}</span>
+          <span class="data-value">{{ this.formatData(fee) }}</span>
         </td>
       </tr>
       <tr>
         <td>Tax</td>
         <td *ngFor="let tax of details.tax">
-          <span class="data-prefix">$</span>
-          <span class="data-value">{{ tax }}</span>
+          <span class="data-value">{{ this.formatData(tax) }}</span>
         </td>
       </tr>
       <tr>
         <td>Withdrawals</td>
         <td *ngFor="let withdrawal of details.withdrawals">
-          <span class="data-prefix">$</span>
           <span class="data-value" *ngIf="withdrawal == 0">-</span>
           <span class="data-value" *ngIf="withdrawal > 0">
-            {{ withdrawal }}
+            {{ this.formatData(withdrawal) }}
           </span>
         </td>
       </tr>
       <tr>
         <td>End Balance</td>
         <td *ngFor="let endBalance of details.endBalance">
-          <span class="data-prefix">$</span>
-          <span class="data-value">{{ endBalance }}</span>
+          <span class="data-value">{{ this.formatData(endBalance) }}</span>
         </td>
       </tr>
     </tbody>

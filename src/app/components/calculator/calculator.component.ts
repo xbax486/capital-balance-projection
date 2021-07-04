@@ -1,15 +1,16 @@
-import { Component, OnInit} from '@angular/core';
+import { Component } from '@angular/core';
 import { NgForm } from '@angular/forms';
 import { User } from '../../interfaces/user';
 import { CalculatorFormDetails } from '../../interfaces/calculator.form.details';
 import { CalculationDetails } from 'src/app/interfaces/calculation.details';
+import { DataProcessService } from './../../services/data-process.service';
 
 @Component({
   selector: 'app-calculator',
   templateUrl: './calculator.component.html',
   styleUrls: ['./calculator.component.css'],
 })
-export class CalculatorComponent implements OnInit {
+export class CalculatorComponent {
   public details: CalculationDetails = {
     ages: [],
     startBalance: [],
@@ -52,11 +53,7 @@ export class CalculatorComponent implements OnInit {
   public balance: number[] = [];
   public years: string[] = [];
 
-  private readonly RATE_PERCENTAGE = 100;
-
-  constructor() {}
-
-  ngOnInit(): void {}
+  constructor(private dataProcessService: DataProcessService) {}
 
   onSubmit(calculatorForm: NgForm) {
     this.resetAllDataArrays();
@@ -65,31 +62,31 @@ export class CalculatorComponent implements OnInit {
 
   getContributions(year: number, user: User) {
     user.outputs.contributions = this.user.precondictions.ageOfCurrentYear >= this.user.inputs.retirementAge ? 
-      0 : user.inputs.salary * this.toPercentage(user.inputs.contributionRate) * Math.pow(1 + this.toPercentage(user.inputs.inflationRate), year - 1);
+      0 : user.inputs.salary * this.dataProcessService.toPercentage(user.inputs.contributionRate) * Math.pow(1 + this.dataProcessService.toPercentage(user.inputs.inflationRate), year - 1);
     return user.outputs.contributions;
   }
 
   getEarnings(year: number, user: User) {
     let startBalance = this.getStartBalance(year, user);
-    user.outputs.earnings = (startBalance + user.outputs.contributions) * this.toPercentage(user.inputs.earningsRate);
+    user.outputs.earnings = (startBalance + user.outputs.contributions) * this.dataProcessService.toPercentage(user.inputs.earningsRate);
     return user.outputs.earnings;
   }
 
   getFees(year: number, user: User) {
     let startBalance = this.getStartBalance(year, user);
-    user.outputs.fees = (startBalance + user.outputs.contributions + user.outputs.earnings) * this.toPercentage(user.inputs.feesRate);
+    user.outputs.fees = (startBalance + user.outputs.contributions + user.outputs.earnings) * this.dataProcessService.toPercentage(user.inputs.feesRate);
     return user.outputs.fees;
   }
 
   getTax(user: User) {
-    user.outputs.tax = (user.outputs.contributions + user.outputs.earnings) * this.toPercentage(user.inputs.taxRate);
+    user.outputs.tax = (user.outputs.contributions + user.outputs.earnings) * this.dataProcessService.toPercentage(user.inputs.taxRate);
     return user.outputs.tax;
   }
 
   getWithdrawals(year: number, user: User) {
     let startBalance = this.getStartBalance(year, user);
     user.outputs.withdrawals = this.user.precondictions.ageOfCurrentYear < this.user.inputs.retirementAge ? 
-      0 : startBalance * this.toPercentage(user.inputs.withdrawalRate);
+      0 : startBalance * this.dataProcessService.toPercentage(user.inputs.withdrawalRate);
     return user.outputs.withdrawals;
   }
 
@@ -98,10 +95,6 @@ export class CalculatorComponent implements OnInit {
     user.outputs.endBalance = startBalance + user.outputs.contributions + user.outputs.earnings - user.outputs.fees - user.outputs.tax - user.outputs.withdrawals;
     user.outputs.startBalance = user.outputs.endBalance;
     return user.outputs.endBalance;
-  }
-
-  private toPercentage(rate: number) {
-    return rate / this.RATE_PERCENTAGE;
   }
 
   private getStartBalance(year: number, user: User) {
