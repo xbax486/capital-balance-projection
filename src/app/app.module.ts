@@ -6,13 +6,15 @@ import { AppComponent } from './app.component';
 import { CalculatorComponent } from './components/calculator/calculator.component';
 import { LineChartComponent } from './components/line-chart/line-chart.component';
 import { DetailsTableComponent } from './components/details-table/details-table.component';
+import { LoadingSpinnerComponent } from './components/loading-spinner/loading-spinner.component';
 
 @NgModule({
   declarations: [
     AppComponent,
     CalculatorComponent,
     LineChartComponent,
-    DetailsTableComponent
+    DetailsTableComponent,
+    LoadingSpinnerComponent
   ],
   imports: [
     BrowserModule,

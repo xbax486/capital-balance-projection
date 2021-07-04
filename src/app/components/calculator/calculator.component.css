@@ -2,3 +2,7 @@ input.ng-invalid.ng-touched,
 input.retirement-age-invalid {
   border: 1px solid #dc3545;
 }
+
+.loading-spinner {
+  text-align: center;
+}

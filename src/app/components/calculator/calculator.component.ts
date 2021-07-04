@@ -14,7 +14,7 @@ import { ToastService } from "./../../services/toast.service";
   styleUrls: ['./calculator.component.css'],
 })
 export class CalculatorComponent {
-  public userPrecondictionsFetched = false;
+  public loadingPrecondictions = true;
   public details: CalculationDetails = {
     ages: [],
     startBalance: [],
@@ -146,7 +146,7 @@ export class CalculatorComponent {
   private fetchUserPrecondictions() {
     this.dataFetchService.userPrecondictions$.subscribe(
       (userPrecondictions: UserPrecondictions) => {
-        this.userPrecondictionsFetched = true;
+        this.loadingPrecondictions = false;
         this.user.precondictions = userPrecondictions;
       },
       (error) =>{

@@ -1,5 +1,11 @@
 <ng2-toasty [position]="'top-right'"></ng2-toasty>
-<div class="calculator-wrapper my-5" *ngIf="userPrecondictionsFetched">
+<div class="loading-spinner" *ngIf="loadingPrecondictions">
+  <h3>
+    Precondictions for calculation are loading. Please wait for it to complete.
+  </h3>
+  <app-loading-spinner></app-loading-spinner>
+</div>
+<div class="calculator-wrapper my-5" *ngIf="!loadingPrecondictions">
   <h3>Inputs Form</h3>
   <form (ngSubmit)="onSubmit(calculatorForm)" #calculatorForm="ngForm">
     <fieldset
@@ -281,17 +287,27 @@
         </div>
       </div>
     </fieldset>
-    <button
-      type="submit"
-      class="btn btn-primary"
-      [disabled]="
-        calculatorForm.form.invalid ||
-        user.precondictions.firstYear > user.precondictions.lastYear ||
-        user.inputs.retirementAge <= user.precondictions.ageOfFirstYear
-      "
-    >
-      Submit
-    </button>
+    <div class="row">
+      <div class="col col-md-auto col-sm-12">
+        <button
+          type="submit"
+          class="btn btn-primary btn-block"
+          [disabled]="
+            calculatorForm.form.invalid ||
+            user.precondictions.firstYear > user.precondictions.lastYear ||
+            user.inputs.retirementAge <= user.precondictions.ageOfFirstYear
+          "
+        >
+          Submit
+        </button>
+      </div>
+      <div class="col">
+        <h5>
+          Please click on the 'Submit' button for the calculation and check the
+          results in both the chart and table shown below.
+        </h5>
+      </div>
+    </div>
   </form>
   <app-line-chart [balance]="balance" [years]="years"></app-line-chart>
   <app-details-table
