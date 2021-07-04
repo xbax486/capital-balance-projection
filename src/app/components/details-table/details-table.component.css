@@ -1,0 +1,12 @@
+.table td,
+.table th {
+  min-width: 110px;
+}
+
+span.data-prefix {
+  float: left;
+}
+
+span.data-value {
+  float: right;
+}

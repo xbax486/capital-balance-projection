@@ -2,6 +2,7 @@ import { Component, OnInit} from '@angular/core';
 import { NgForm } from '@angular/forms';
 import { User } from '../../interfaces/user';
 import { CalculatorFormDetails } from '../../interfaces/calculator.form.details';
+import { CalculationDetails } from 'src/app/interfaces/calculation.details';
 
 @Component({
   selector: 'app-calculator',
@@ -9,6 +10,16 @@ import { CalculatorFormDetails } from '../../interfaces/calculator.form.details'
   styleUrls: ['./calculator.component.css'],
 })
 export class CalculatorComponent implements OnInit {
+  public details: CalculationDetails = {
+    ages: [],
+    startBalance: [],
+    contributions: [],
+    earnings: [],
+    fees: [],
+    tax: [],
+    withdrawals: [],
+    endBalance: []
+  };
   public user: User = {
     precondictions: {
       startBalance: 300000,
@@ -36,16 +47,7 @@ export class CalculatorComponent implements OnInit {
       withdrawals: 0,
       endBalance: 0,
     },
-    calculationDetails: {
-      ages: [],
-      startBalance: [],
-      contributions: [],
-      earnings: [],
-      fees: [],
-      tax: [],
-      withdrawals: [],
-      endBalance: []
-    }
+    calculationDetails: this.details
   };
   public balance: number[] = [];
   public years: string[] = [];

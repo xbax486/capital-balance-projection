@@ -3,16 +3,3 @@ input.range-invalid,
 input.retirement-age-invalid {
   border: 1px solid #dc3545;
 }
-
-.table td,
-.table th {
-  min-width: 110px;
-}
-
-span.data-prefix {
-  float: left;
-}
-
-span.data-value {
-  float: right;
-}
