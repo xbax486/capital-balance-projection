@@ -1,6 +1,8 @@
 import { Injectable } from '@angular/core';
 import { ToastyService, ToastOptions } from 'ng2-toasty';
 
+const SECONDS_TO_CLOSE_NOTIFICATION = 3000;
+
 @Injectable({
   providedIn: 'root'
 })
@@ -20,7 +22,7 @@ export class ToastService {
       title: title,
       msg:  httpResponse.message,
       showClose: true,
-      timeout: 5000,
+      timeout: SECONDS_TO_CLOSE_NOTIFICATION,
       theme: 'bootstrap',
     };
     if(httpResponse.status && httpResponse.status == 200) {

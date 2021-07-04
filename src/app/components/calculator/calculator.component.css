@@ -3,6 +3,10 @@ input.input-invalid {
   border: 1px solid #dc3545;
 }
 
-.loading-spinner {
+.loading-wrapper {
   text-align: center;
+}
+
+.loading-wrapper h6 {
+  text-align: left;
 }

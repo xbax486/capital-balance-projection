@@ -16,6 +16,8 @@ import { DataProcessService } from 'src/app/services/data-process.service';
 export class LineChartComponent implements OnChanges {
   @Input() balance: number[] = [];
   @Input() years: string[] = [];
+  @Input() calculationCompleted: boolean;
+
   @ViewChild('myCanvas', { static: false })
   myCanvas!: ElementRef;
 
@@ -23,7 +25,9 @@ export class LineChartComponent implements OnChanges {
   private borderColor: string = '#157DEC';
   private chart: any;
 
-  constructor(private dataProcessService: DataProcessService) {}
+  constructor(private dataProcessService: DataProcessService) {
+    this.calculationCompleted = false;
+  }
 
   ngAfterViewInit(): void {
     this.context = this.myCanvas.nativeElement.getContext('2d');

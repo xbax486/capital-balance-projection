@@ -1,4 +1,6 @@
-<div class="chart-wrapper my-5" [hidden]="balance.length == 0">
-  <h3>Start Balance Chart</h3>
-  <canvas #myCanvas id="myChart"></canvas>
+<div class="row mt-5" [hidden]="!calculationCompleted">
+  <div class="col-12">
+    <h3>Start Balance Chart</h3>
+    <canvas #myCanvas id="myChart"></canvas>
+  </div>
 </div>

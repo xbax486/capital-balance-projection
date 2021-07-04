@@ -19,7 +19,10 @@ export class DetailsTableComponent {
     endBalance: [],
   };
   @Input() years: string[] = [];
+  @Input() calculationCompleted: boolean;
 
-  constructor(public dataProcessService: DataProcessService) {}
+  constructor(public dataProcessService: DataProcessService) {
+    this.calculationCompleted = true;
+  }
 }
 

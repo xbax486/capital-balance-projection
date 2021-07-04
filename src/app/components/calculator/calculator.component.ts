@@ -58,6 +58,7 @@ export class CalculatorComponent implements OnInit{
   public years: string[] = [];
   public loadingPrecondictions = true;
   public loadingUserInputs = true;
+  public calculationCompleted = false;
 
   constructor(
     public dataProcessService: DataProcessService, 
@@ -73,6 +74,7 @@ export class CalculatorComponent implements OnInit{
   onSubmit(calculatorForm: NgForm) {
     this.resetAllDataArrays();
     this.calculate(calculatorForm.form.value);
+    this.calculationCompleted = true;
   }
 
   getContributions(year: number, user: User) {

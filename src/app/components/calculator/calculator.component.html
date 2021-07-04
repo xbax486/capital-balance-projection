@@ -1,5 +1,5 @@
 <ng2-toasty [position]="'top-right'"></ng2-toasty>
-<div class="loading-spinner" *ngIf="loadingPrecondictions && loadingUserInputs">
+<div class="loading-wrapper" *ngIf="loadingPrecondictions || loadingUserInputs">
   <h6>
     Precondictions and default user inputs are loading. Please wait for them to
     start calculation.
@@ -7,328 +7,356 @@
   <app-loading-spinner></app-loading-spinner>
 </div>
 <div
-  class="calculator-wrapper my-5"
-  *ngIf="!loadingPrecondictions || !loadingUserInputs"
+  class="calculator-wrapper"
+  *ngIf="!loadingPrecondictions && !loadingUserInputs"
 >
   <div class="row">
     <div class="col">
       <h6>
         Please feel free to update the inputs and click on the 'Submit' button
-        for the calculation. Both the the line chart and table would be shown
-        below. Also, please notice all inputs must be positive values;
+        for the calculation. Please note that both the line chart and table
+        would be shown below. Also, please notice all inputs must be positive
+        values. So there are validation for the inputs.
       </h6>
     </div>
   </div>
-  <h3>Inputs Form</h3>
-  <form (ngSubmit)="onSubmit(calculatorForm)" #calculatorForm="ngForm">
-    <fieldset
-      class="border p-3 mb-4"
-      ngModelGroup="precondictions"
-      #precondictionsCtrl="ngModelGroup"
-      *ngIf="!loadingPrecondictions"
-    >
-      <legend class="w-auto">Precondictions</legend>
-      <div class="form-row">
-        <div class="form-group col-lg-3 col-md-6">
-          <label for="startBalance">First Year Start Balance</label>
-          <div class="input-group">
-            <div class="input-group-prepend">
-              <span class="input-group-text">$</span>
-            </div>
-            <input
-              type="number"
-              min="0"
-              class="form-control"
-              id="startBalance"
-              name="startBalance"
-              [(ngModel)]="user.precondictions.startBalance"
-              #startBalance="ngModel"
-              required
-              readonly
-            />
-          </div>
-        </div>
-        <div class="form-group col-lg-3 col-md-6">
-          <label for="ageOfFirstYear">Age of first year</label>
-          <div class="input-group">
-            <input
-              type="number"
-              min="18"
-              class="form-control"
-              id="ageOfFirstYear"
-              name="ageOfFirstYear"
-              [(ngModel)]="user.precondictions.ageOfFirstYear"
-              #ageOfFirstYear="ngModel"
-              required
-              readonly
-            />
-          </div>
-        </div>
-        <div class="form-group col-lg-3 col-md-6">
-          <label for="firstYear">First Year</label>
-          <div class="input-group">
-            <input
-              type="number"
-              min="2020"
-              class="form-control"
-              id="firstYear"
-              name="firstYear"
-              [(ngModel)]="user.precondictions.firstYear"
-              #firstYear="ngModel"
-              required
-              readonly
-            />
-          </div>
-        </div>
-        <div class="form-group col-lg-3 col-md-6">
-          <label for="lastYear">Last Year</label>
-          <div class="input-group">
-            <input
-              type="number"
-              min="2020"
-              class="form-control"
-              id="lastYear"
-              name="lastYear"
-              [(ngModel)]="user.precondictions.lastYear"
-              #lastYear="ngModel"
-              required
-              readonly
-            />
-          </div>
-        </div>
-      </div>
-    </fieldset>
-    <fieldset
-      class="border p-3 mb-4"
-      ngModelGroup="inputs"
-      #inputsCtrl="ngModelGroup"
-      *ngIf="!loadingUserInputs"
-    >
-      <legend class="w-auto">Inputs</legend>
-      <div class="form-row">
-        <div class="form-group col-md-6">
-          <label for="salary">Salary</label>
-          <div class="input-group">
-            <input
-              type="text"
-              class="form-control"
-              [class.input-invalid]="user.inputs.salary < 0"
-              id="salary"
-              placeholder="Please enter the salary of the user"
-              name="salary"
-              [ngModel]="
-                user.inputs.salary
-                  | currency
-                    : dataProcessService.CURRENCY
-                    : 'symbol'
-                    : dataProcessService.SYMBOL
-              "
-              (ngModelChange)="
-                user.inputs.salary =
-                  dataProcessService.currencyInputChanged($event)
-              "
-              #salary="ngModel"
-              required
-            />
-          </div>
-          <div class="alert alert-danger" *ngIf="user.inputs.salary < 0">
-            The salary should not be a negative number!
-          </div>
-        </div>
-        <div class="form-group col-md-6">
-          <label for="contributionRate">Contribution Rate</label>
-          <div class="input-group">
-            <input
-              type="number"
-              min="0"
-              class="form-control"
-              id="contributionRate"
-              placeholder="Please enter the contribution rate of the user"
-              name="contributionRate"
-              [(ngModel)]="user.inputs.contributionRate"
-              #contributionRate="ngModel"
-              required
-            />
-            <div class="input-group-append">
-              <span class="input-group-text">%</span>
-            </div>
-          </div>
-          <div
-            class="alert alert-danger"
-            *ngIf="user.inputs.contributionRate < 0"
+  <div class="row">
+    <div class="col">
+      <div class="calculator-wrapper mt-5">
+        <h3>Inputs Form</h3>
+        <form (ngSubmit)="onSubmit(calculatorForm)" #calculatorForm="ngForm">
+          <fieldset
+            class="border p-3 mb-4"
+            ngModelGroup="precondictions"
+            #precondictionsCtrl="ngModelGroup"
+            *ngIf="!loadingPrecondictions"
           >
-            The contribution rate should not be a negative number!
-          </div>
-        </div>
-      </div>
-      <div class="form-row">
-        <div class="form-group col-md-6">
-          <label for="inflationRate">Inflation Rate</label>
-          <div class="input-group">
-            <input
-              type="number"
-              min="0"
-              class="form-control"
-              id="inflationRate"
-              placeholder="Please enter the inflation rate of the user"
-              name="inflationRate"
-              [(ngModel)]="user.inputs.inflationRate"
-              #inflationRate="ngModel"
-              required
-            />
-            <div class="input-group-append">
-              <span class="input-group-text">%</span>
+            <legend class="w-auto">Precondictions</legend>
+            <div class="form-row">
+              <div class="form-group col-lg-3 col-md-6">
+                <label for="startBalance">First Year Start Balance</label>
+                <div class="input-group">
+                  <div class="input-group-prepend">
+                    <span class="input-group-text">$</span>
+                  </div>
+                  <input
+                    type="number"
+                    min="0"
+                    class="form-control"
+                    id="startBalance"
+                    name="startBalance"
+                    [(ngModel)]="user.precondictions.startBalance"
+                    #startBalance="ngModel"
+                    required
+                    readonly
+                  />
+                </div>
+              </div>
+              <div class="form-group col-lg-3 col-md-6">
+                <label for="ageOfFirstYear">Age of first year</label>
+                <div class="input-group">
+                  <input
+                    type="number"
+                    min="18"
+                    class="form-control"
+                    id="ageOfFirstYear"
+                    name="ageOfFirstYear"
+                    [(ngModel)]="user.precondictions.ageOfFirstYear"
+                    #ageOfFirstYear="ngModel"
+                    required
+                    readonly
+                  />
+                </div>
+              </div>
+              <div class="form-group col-lg-3 col-md-6">
+                <label for="firstYear">First Year</label>
+                <div class="input-group">
+                  <input
+                    type="number"
+                    min="2020"
+                    class="form-control"
+                    id="firstYear"
+                    name="firstYear"
+                    [(ngModel)]="user.precondictions.firstYear"
+                    #firstYear="ngModel"
+                    required
+                    readonly
+                  />
+                </div>
+              </div>
+              <div class="form-group col-lg-3 col-md-6">
+                <label for="lastYear">Last Year</label>
+                <div class="input-group">
+                  <input
+                    type="number"
+                    min="2020"
+                    class="form-control"
+                    id="lastYear"
+                    name="lastYear"
+                    [(ngModel)]="user.precondictions.lastYear"
+                    #lastYear="ngModel"
+                    required
+                    readonly
+                  />
+                </div>
+              </div>
             </div>
-          </div>
-          <div class="alert alert-danger" *ngIf="user.inputs.inflationRate < 0">
-            The inflation rate should not be a negative number!
-          </div>
-        </div>
-        <div class="form-group col-md-6">
-          <label for="earningsRate">Earnings Rate</label>
-          <div class="input-group">
-            <input
-              type="number"
-              min="0"
-              class="form-control"
-              id="earningsRate"
-              placeholder="Please enter the earnings rate of the user"
-              name="earningsRate"
-              [(ngModel)]="user.inputs.earningsRate"
-              #earningsRate="ngModel"
-              required
-            />
-            <div class="input-group-append">
-              <span class="input-group-text">%</span>
-            </div>
-          </div>
-          <div class="alert alert-danger" *ngIf="user.inputs.earningsRate < 0">
-            The earnings rate should not be a negative number!
-          </div>
-        </div>
-      </div>
-      <div class="form-row">
-        <div class="form-group col-md-6">
-          <label for="feesRate">Fees Rate</label>
-          <div class="input-group">
-            <input
-              type="number"
-              min="0"
-              class="form-control"
-              id="feesRate"
-              placeholder="Please enter the fees rate of the user"
-              name="feesRate"
-              [(ngModel)]="user.inputs.feesRate"
-              #feesRate="ngModel"
-              required
-            />
-            <div class="input-group-append">
-              <span class="input-group-text">%</span>
-            </div>
-          </div>
-          <div class="alert alert-danger" *ngIf="user.inputs.feesRate < 0">
-            The fees rate should not be a negative number!
-          </div>
-        </div>
-        <div class="form-group col-md-6">
-          <label for="taxRate">Tax Rate</label>
-          <div class="input-group">
-            <input
-              type="number"
-              min="0"
-              class="form-control"
-              id="taxRate"
-              placeholder="Please enter the tax rate of the user"
-              name="taxRate"
-              [(ngModel)]="user.inputs.taxRate"
-              #taxRate="ngModel"
-              required
-            />
-            <div class="input-group-append">
-              <span class="input-group-text">%</span>
-            </div>
-          </div>
-          <div class="alert alert-danger" *ngIf="user.inputs.taxRate < 0">
-            The tax rate should not be a negative number!
-          </div>
-        </div>
-      </div>
-      <div class="form-row">
-        <div class="form-group col-md-6">
-          <label for="withdrawalRate">Withdrawal Rate</label>
-          <div class="input-group">
-            <input
-              type="number"
-              min="0"
-              class="form-control"
-              id="withdrawalRate"
-              placeholder="Please enter the withdrawal rate of the user"
-              name="withdrawalRate"
-              [(ngModel)]="user.inputs.withdrawalRate"
-              #withdrawalRate="ngModel"
-              required
-            />
-            <div class="input-group-append">
-              <span class="input-group-text">%</span>
-            </div>
-          </div>
-          <div
-            class="alert alert-danger"
-            *ngIf="user.inputs.withdrawalRate < 0"
+          </fieldset>
+          <fieldset
+            class="border p-3 mb-4"
+            ngModelGroup="inputs"
+            #inputsCtrl="ngModelGroup"
+            *ngIf="!loadingUserInputs"
           >
-            The withdrawal rate should not be a negative number!
+            <legend class="w-auto">Inputs</legend>
+            <div class="form-row">
+              <div class="form-group col-md-6">
+                <label for="salary">Salary</label>
+                <div class="input-group">
+                  <input
+                    type="text"
+                    class="form-control"
+                    [class.input-invalid]="user.inputs.salary < 0"
+                    id="salary"
+                    placeholder="Please enter the salary of the user"
+                    name="salary"
+                    [ngModel]="
+                      user.inputs.salary
+                        | currency
+                          : dataProcessService.CURRENCY
+                          : 'symbol'
+                          : dataProcessService.SYMBOL
+                    "
+                    (ngModelChange)="
+                      user.inputs.salary =
+                        dataProcessService.currencyInputChanged($event)
+                    "
+                    #salary="ngModel"
+                    required
+                  />
+                </div>
+                <div class="alert alert-danger" *ngIf="user.inputs.salary < 0">
+                  The salary should not be a negative number!
+                </div>
+              </div>
+              <div class="form-group col-md-6">
+                <label for="contributionRate">Contribution Rate</label>
+                <div class="input-group">
+                  <input
+                    type="number"
+                    min="0"
+                    class="form-control"
+                    id="contributionRate"
+                    placeholder="Please enter the contribution rate of the user"
+                    name="contributionRate"
+                    [(ngModel)]="user.inputs.contributionRate"
+                    #contributionRate="ngModel"
+                    required
+                  />
+                  <div class="input-group-append">
+                    <span class="input-group-text">%</span>
+                  </div>
+                </div>
+                <div
+                  class="alert alert-danger"
+                  *ngIf="user.inputs.contributionRate < 0"
+                >
+                  The contribution rate should not be a negative number!
+                </div>
+              </div>
+            </div>
+            <div class="form-row">
+              <div class="form-group col-md-6">
+                <label for="inflationRate">Inflation Rate</label>
+                <div class="input-group">
+                  <input
+                    type="number"
+                    min="0"
+                    class="form-control"
+                    id="inflationRate"
+                    placeholder="Please enter the inflation rate of the user"
+                    name="inflationRate"
+                    [(ngModel)]="user.inputs.inflationRate"
+                    #inflationRate="ngModel"
+                    required
+                  />
+                  <div class="input-group-append">
+                    <span class="input-group-text">%</span>
+                  </div>
+                </div>
+                <div
+                  class="alert alert-danger"
+                  *ngIf="user.inputs.inflationRate < 0"
+                >
+                  The inflation rate should not be a negative number!
+                </div>
+              </div>
+              <div class="form-group col-md-6">
+                <label for="earningsRate">Earnings Rate</label>
+                <div class="input-group">
+                  <input
+                    type="number"
+                    min="0"
+                    class="form-control"
+                    id="earningsRate"
+                    placeholder="Please enter the earnings rate of the user"
+                    name="earningsRate"
+                    [(ngModel)]="user.inputs.earningsRate"
+                    #earningsRate="ngModel"
+                    required
+                  />
+                  <div class="input-group-append">
+                    <span class="input-group-text">%</span>
+                  </div>
+                </div>
+                <div
+                  class="alert alert-danger"
+                  *ngIf="user.inputs.earningsRate < 0"
+                >
+                  The earnings rate should not be a negative number!
+                </div>
+              </div>
+            </div>
+            <div class="form-row">
+              <div class="form-group col-md-6">
+                <label for="feesRate">Fees Rate</label>
+                <div class="input-group">
+                  <input
+                    type="number"
+                    min="0"
+                    class="form-control"
+                    id="feesRate"
+                    placeholder="Please enter the fees rate of the user"
+                    name="feesRate"
+                    [(ngModel)]="user.inputs.feesRate"
+                    #feesRate="ngModel"
+                    required
+                  />
+                  <div class="input-group-append">
+                    <span class="input-group-text">%</span>
+                  </div>
+                </div>
+                <div
+                  class="alert alert-danger"
+                  *ngIf="user.inputs.feesRate < 0"
+                >
+                  The fees rate should not be a negative number!
+                </div>
+              </div>
+              <div class="form-group col-md-6">
+                <label for="taxRate">Tax Rate</label>
+                <div class="input-group">
+                  <input
+                    type="number"
+                    min="0"
+                    class="form-control"
+                    id="taxRate"
+                    placeholder="Please enter the tax rate of the user"
+                    name="taxRate"
+                    [(ngModel)]="user.inputs.taxRate"
+                    #taxRate="ngModel"
+                    required
+                  />
+                  <div class="input-group-append">
+                    <span class="input-group-text">%</span>
+                  </div>
+                </div>
+                <div class="alert alert-danger" *ngIf="user.inputs.taxRate < 0">
+                  The tax rate should not be a negative number!
+                </div>
+              </div>
+            </div>
+            <div class="form-row">
+              <div class="form-group col-md-6">
+                <label for="withdrawalRate">Withdrawal Rate</label>
+                <div class="input-group">
+                  <input
+                    type="number"
+                    min="0"
+                    class="form-control"
+                    id="withdrawalRate"
+                    placeholder="Please enter the withdrawal rate of the user"
+                    name="withdrawalRate"
+                    [(ngModel)]="user.inputs.withdrawalRate"
+                    #withdrawalRate="ngModel"
+                    required
+                  />
+                  <div class="input-group-append">
+                    <span class="input-group-text">%</span>
+                  </div>
+                </div>
+                <div
+                  class="alert alert-danger"
+                  *ngIf="user.inputs.withdrawalRate < 0"
+                >
+                  The withdrawal rate should not be a negative number!
+                </div>
+              </div>
+              <div class="form-group col-md-6">
+                <label for="retirementAge">Retirement age</label>
+                <div class="input-group">
+                  <input
+                    type="number"
+                    [min]="user.precondictions.ageOfFirstYear"
+                    class="form-control"
+                    id="retirementAge"
+                    placeholder="Please enter the retirement age of the user"
+                    name="retirementAge"
+                    [class.input-invalid]="
+                      user.inputs.retirementAge <=
+                      user.precondictions.ageOfFirstYear
+                    "
+                    [(ngModel)]="user.inputs.retirementAge"
+                    #retirementAge="ngModel"
+                    required
+                  />
+                </div>
+                <div
+                  class="alert alert-danger"
+                  *ngIf="
+                    user.inputs.retirementAge <=
+                    user.precondictions.ageOfFirstYear
+                  "
+                >
+                  The retirement age must be greater than the age of the first
+                  year in precondictions!
+                </div>
+              </div>
+            </div>
+          </fieldset>
+          <div class="row">
+            <div class="col col-md-auto col-sm-12">
+              <button
+                type="submit"
+                class="btn btn-primary btn-block"
+                [disabled]="
+                  calculatorForm.form.invalid ||
+                  user.precondictions.firstYear >
+                    user.precondictions.lastYear ||
+                  user.inputs.retirementAge <=
+                    user.precondictions.ageOfFirstYear
+                "
+              >
+                Submit
+              </button>
+            </div>
           </div>
-        </div>
-        <div class="form-group col-md-6">
-          <label for="retirementAge">Retirement age</label>
-          <div class="input-group">
-            <input
-              type="number"
-              [min]="user.precondictions.ageOfFirstYear"
-              class="form-control"
-              id="retirementAge"
-              placeholder="Please enter the retirement age of the user"
-              name="retirementAge"
-              [class.input-invalid]="
-                user.inputs.retirementAge <= user.precondictions.ageOfFirstYear
-              "
-              [(ngModel)]="user.inputs.retirementAge"
-              #retirementAge="ngModel"
-              required
-            />
-          </div>
-          <div
-            class="alert alert-danger"
-            *ngIf="
-              user.inputs.retirementAge <= user.precondictions.ageOfFirstYear
-            "
-          >
-            The retirement age must be greater than the age of the first year in
-            precondictions!
-          </div>
-        </div>
-      </div>
-    </fieldset>
-    <div class="row">
-      <div class="col col-md-auto col-sm-12">
-        <button
-          type="submit"
-          class="btn btn-primary btn-block"
-          [disabled]="
-            calculatorForm.form.invalid ||
-            user.precondictions.firstYear > user.precondictions.lastYear ||
-            user.inputs.retirementAge <= user.precondictions.ageOfFirstYear
-          "
-        >
-          Submit
-        </button>
+        </form>
       </div>
     </div>
-  </form>
-  <app-line-chart [balance]="balance" [years]="years"></app-line-chart>
+  </div>
+</div>
+<div class="line-chart-wrapper">
+  <app-line-chart
+    [balance]="balance"
+    [years]="years"
+    [calculationCompleted]="calculationCompleted"
+  ></app-line-chart>
+</div>
+<div class="details-table-wrapper">
   <app-details-table
     [details]="details"
     [years]="years"
-    *ngIf="balance.length > 0"
+    [calculationCompleted]="calculationCompleted"
   ></app-details-table>
 </div>
