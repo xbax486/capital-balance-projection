@@ -1,9 +1,9 @@
-import { UserPrecondictions } from './../../interfaces/user.precondictions';
 import { Component } from '@angular/core';
 import { NgForm } from '@angular/forms';
 import { User } from '../../interfaces/user';
+import { UserPrecondictions } from './../../interfaces/user.precondictions';
 import { CalculatorFormDetails } from '../../interfaces/calculator.form.details';
-import { CalculationDetails } from 'src/app/interfaces/calculation.details';
+import { CalculationDetails } from './../../interfaces/calculation.details';
 import { DataProcessService } from './../../services/data-process.service';
 import { DataFetchService } from "./../../services/data-fetch.service";
 import { ToastService } from "./../../services/toast.service";
@@ -58,7 +58,7 @@ export class CalculatorComponent {
   public years: string[] = [];
 
   constructor(
-    private dataProcessService: DataProcessService, 
+    public dataProcessService: DataProcessService, 
     private dataFetchService: DataFetchService, 
     private toastService: ToastService,
     ) {
@@ -114,19 +114,21 @@ export class CalculatorComponent {
   private calculate(details: CalculatorFormDetails) {
     let startAge = details.precondictions.ageOfFirstYear;
     let endAge = details.precondictions.lastYear - details.precondictions.firstYear + details.precondictions.ageOfFirstYear;
+    let currentStartBalance = 0;
     for(var index = startAge; index <= endAge; index++) {
-      let year = index - 44;
+      let year = index - startAge + 1;
       this.user.precondictions.ageOfCurrentYear = index;
       this.user.calculationDetails.ages.push(index);
-      this.user.calculationDetails.startBalance.push(Math.round(this.getStartBalance(year, this.user)));
+      currentStartBalance = this.getStartBalance(year, this.user);
+      this.balance.push(Math.round(currentStartBalance));
+      this.years.push((details.precondictions.firstYear + year - 1).toString());
+      this.user.calculationDetails.startBalance.push(Math.round(currentStartBalance));
       this.user.calculationDetails.contributions.push(Math.round(this.getContributions(year, this.user)));
       this.user.calculationDetails.earnings.push(Math.round(this.getEarnings(year, this.user)));
       this.user.calculationDetails.fees.push(Math.round(this.getFees(year, this.user)));
       this.user.calculationDetails.tax.push(Math.round(this.getTax(this.user)));
       this.user.calculationDetails.withdrawals.push(Math.round(this.getWithdrawals(year, this.user)));
       this.user.calculationDetails.endBalance.push(Math.round(this.getEndBalance(year, this.user)));
-      this.balance.push(Math.round(this.user.outputs.startBalance));
-      this.years.push((details.precondictions.firstYear + year - 1).toString());
     }
   }
 

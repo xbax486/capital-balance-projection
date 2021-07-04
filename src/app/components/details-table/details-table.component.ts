@@ -20,10 +20,6 @@ export class DetailsTableComponent {
   };
   @Input() years: string[] = [];
 
-  constructor(private dataProcessService: DataProcessService) {}
-
-  public formatData(data: number) {
-    return this.dataProcessService.formatCurrency(data);
-  }
+  constructor(public dataProcessService: DataProcessService) {}
 }
 

@@ -68,7 +68,7 @@ export class LineChartComponent implements OnChanges {
             {
               ticks: {
                 callback: function (label) {
-                  return dataProcessService.formatCurrency(+label);
+                  return new Intl.NumberFormat(dataProcessService.LOCALE, {style: 'currency', currency: dataProcessService.CURRENCY, maximumFractionDigits: 0}).format(+label)
                 },
               }
             },

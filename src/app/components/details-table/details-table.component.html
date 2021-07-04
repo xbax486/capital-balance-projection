@@ -19,7 +19,15 @@
       <tr>
         <td>Start Balance</td>
         <td *ngFor="let startBalance of details.startBalance">
-          <span class="data-value">{{ this.formatData(startBalance) }}</span>
+          <span class="data-value"
+            >{{
+              startBalance
+                | currency
+                  : dataProcessService.CURRENCY
+                  : "symbol"
+                  : dataProcessService.SYMBOL
+            }}
+          </span>
         </td>
       </tr>
       <tr>
@@ -27,26 +35,56 @@
         <td *ngFor="let contribution of details.contributions">
           <span class="data-value" *ngIf="contribution == 0">-</span>
           <span class="data-value" *ngIf="contribution > 0">
-            {{ this.formatData(contribution) }}
+            {{
+              contribution
+                | currency
+                  : dataProcessService.CURRENCY
+                  : "symbol"
+                  : dataProcessService.SYMBOL
+            }}
           </span>
         </td>
       </tr>
       <tr>
         <td>Earnings</td>
         <td *ngFor="let earning of details.earnings">
-          <span class="data-value">{{ this.formatData(earning) }}</span>
+          <span class="data-value"
+            >{{
+              earning
+                | currency
+                  : dataProcessService.CURRENCY
+                  : "symbol"
+                  : dataProcessService.SYMBOL
+            }}
+          </span>
         </td>
       </tr>
       <tr>
         <td>Fees</td>
         <td *ngFor="let fee of details.fees">
-          <span class="data-value">{{ this.formatData(fee) }}</span>
+          <span class="data-value"
+            >{{
+              fee
+                | currency
+                  : dataProcessService.CURRENCY
+                  : "symbol"
+                  : dataProcessService.SYMBOL
+            }}
+          </span>
         </td>
       </tr>
       <tr>
         <td>Tax</td>
         <td *ngFor="let tax of details.tax">
-          <span class="data-value">{{ this.formatData(tax) }}</span>
+          <span class="data-value"
+            >{{
+              tax
+                | currency
+                  : dataProcessService.CURRENCY
+                  : "symbol"
+                  : dataProcessService.SYMBOL
+            }}
+          </span>
         </td>
       </tr>
       <tr>
@@ -54,14 +92,28 @@
         <td *ngFor="let withdrawal of details.withdrawals">
           <span class="data-value" *ngIf="withdrawal == 0">-</span>
           <span class="data-value" *ngIf="withdrawal > 0">
-            {{ this.formatData(withdrawal) }}
+            {{
+              withdrawal
+                | currency
+                  : dataProcessService.CURRENCY
+                  : "symbol"
+                  : dataProcessService.SYMBOL
+            }}
           </span>
         </td>
       </tr>
       <tr>
         <td>End Balance</td>
         <td *ngFor="let endBalance of details.endBalance">
-          <span class="data-value">{{ this.formatData(endBalance) }}</span>
+          <span class="data-value"
+            >{{
+              endBalance
+                | currency
+                  : dataProcessService.CURRENCY
+                  : "symbol"
+                  : dataProcessService.SYMBOL
+            }}
+          </span>
         </td>
       </tr>
     </tbody>

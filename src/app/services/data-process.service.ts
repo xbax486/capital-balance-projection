@@ -1,20 +1,22 @@
 import { Injectable } from '@angular/core';
 
-const DIVISOR = 100;
-const LOCALE = 'en-US';
-const CURRENCY = 'USD';
-
 @Injectable({
   providedIn: 'root'
 })
 export class DataProcessService {
+  readonly DIVISOR = 100;
+  readonly LOCALE = 'en-US';
+  readonly CURRENCY = 'USD';
+  readonly SYMBOL = '1.0-0';
+
   constructor() { }
 
   public toPercentage(rate: number) {
-    return rate / DIVISOR;
+    return rate / this.DIVISOR;
   }
 
-  public formatCurrency(data: number) {
-    return new Intl.NumberFormat(LOCALE, {style: 'currency', currency: CURRENCY, maximumFractionDigits: 0}).format(data);
+  public currencyInputChanged(data: any) {
+    var number = data.replace(/[$,]/g, '');
+    return Number(number);
   }
 }
