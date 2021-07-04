@@ -76,7 +76,7 @@ export class CalculatorComponent implements OnInit{
   }
 
   getContributions(year: number, user: User) {
-    user.outputs.contributions = this.user.precondictions.ageOfCurrentYear >= this.user.inputs.retirementAge ? 
+    user.outputs.contributions = user.precondictions.ageOfCurrentYear >= user.inputs.retirementAge ? 
       0 : user.inputs.salary * this.dataProcessService.toPercentage(user.inputs.contributionRate) * Math.pow(1 + this.dataProcessService.toPercentage(user.inputs.inflationRate), year - 1);
     return user.outputs.contributions;
   }
