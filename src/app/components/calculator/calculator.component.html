@@ -1,17 +1,31 @@
 <ng2-toasty [position]="'top-right'"></ng2-toasty>
-<div class="loading-spinner" *ngIf="loadingPrecondictions">
-  <h3>
-    Precondictions for calculation are loading. Please wait for it to complete.
-  </h3>
+<div class="loading-spinner" *ngIf="loadingPrecondictions && loadingUserInputs">
+  <h6>
+    Precondictions and default user inputs are loading. Please wait for them to
+    start calculation.
+  </h6>
   <app-loading-spinner></app-loading-spinner>
 </div>
-<div class="calculator-wrapper my-5" *ngIf="!loadingPrecondictions">
+<div
+  class="calculator-wrapper my-5"
+  *ngIf="!loadingPrecondictions || !loadingUserInputs"
+>
+  <div class="row">
+    <div class="col">
+      <h6>
+        Please feel free to update the inputs and click on the 'Submit' button
+        for the calculation. Both the the line chart and table would be shown
+        below. Also, please notice all inputs must be positive values;
+      </h6>
+    </div>
+  </div>
   <h3>Inputs Form</h3>
   <form (ngSubmit)="onSubmit(calculatorForm)" #calculatorForm="ngForm">
     <fieldset
       class="border p-3 mb-4"
       ngModelGroup="precondictions"
       #precondictionsCtrl="ngModelGroup"
+      *ngIf="!loadingPrecondictions"
     >
       <legend class="w-auto">Precondictions</legend>
       <div class="form-row">
@@ -88,6 +102,7 @@
       class="border p-3 mb-4"
       ngModelGroup="inputs"
       #inputsCtrl="ngModelGroup"
+      *ngIf="!loadingUserInputs"
     >
       <legend class="w-auto">Inputs</legend>
       <div class="form-row">
@@ -307,12 +322,6 @@
         >
           Submit
         </button>
-      </div>
-      <div class="col">
-        <h5>
-          Please click on the 'Submit' button for the calculation and check the
-          results in both the chart and table shown below.
-        </h5>
       </div>
     </div>
   </form>

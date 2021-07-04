@@ -1,9 +1,10 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { NgForm } from '@angular/forms';
 import { User } from '../../interfaces/user';
+import { UserInputs } from './../../interfaces/user.inputs';
 import { UserPrecondictions } from './../../interfaces/user.precondictions';
-import { CalculatorFormDetails } from '../../interfaces/calculator.form.details';
 import { CalculationDetails } from './../../interfaces/calculation.details';
+import { CalculatorFormDetails } from '../../interfaces/calculator.form.details';
 import { DataProcessService } from './../../services/data-process.service';
 import { DataFetchService } from "./../../services/data-fetch.service";
 import { ToastService } from "./../../services/toast.service";
@@ -13,8 +14,7 @@ import { ToastService } from "./../../services/toast.service";
   templateUrl: './calculator.component.html',
   styleUrls: ['./calculator.component.css'],
 })
-export class CalculatorComponent {
-  public loadingPrecondictions = true;
+export class CalculatorComponent implements OnInit{
   public details: CalculationDetails = {
     ages: [],
     startBalance: [],
@@ -34,14 +34,14 @@ export class CalculatorComponent {
       ageOfCurrentYear: 0
     },
     inputs: {
-      salary: 100000,
-      contributionRate: 9.5,
-      inflationRate: 3,
-      earningsRate: 7.5,
-      feesRate: 1.5,
-      taxRate: 15,
-      withdrawalRate: 5,
-      retirementAge: 66
+      salary: 0,
+      contributionRate: 0,
+      inflationRate: 0,
+      earningsRate: 0,
+      feesRate: 0,
+      taxRate: 0,
+      withdrawalRate: 0,
+      retirementAge: 0
     },
     outputs: {
       startBalance: 0,
@@ -56,13 +56,18 @@ export class CalculatorComponent {
   };
   public balance: number[] = [];
   public years: string[] = [];
+  public loadingPrecondictions = true;
+  public loadingUserInputs = true;
 
   constructor(
     public dataProcessService: DataProcessService, 
     private dataFetchService: DataFetchService, 
     private toastService: ToastService,
-    ) {
+  ) {}
+
+  ngOnInit(): void {
     this.fetchUserPrecondictions();
+    this.fetchUserInputs();
   }
 
   onSubmit(calculatorForm: NgForm) {
@@ -153,6 +158,18 @@ export class CalculatorComponent {
       },
       (error) =>{
         this.toastService.onErrorCall('Fail to fetch precondictions. Please contact administrator.')
+      }
+    );
+  }
+
+  private fetchUserInputs() {
+    this.dataFetchService.userInputs$.subscribe(
+      (userInputs: UserInputs) => {
+        this.loadingUserInputs = false;
+        this.user.inputs = userInputs;
+      },
+      (error) =>{
+        this.toastService.onErrorCall('Fail to fetch user inputs. Please contact administrator.')
       }
     );
   }
