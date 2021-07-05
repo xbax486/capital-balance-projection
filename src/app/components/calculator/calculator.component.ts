@@ -15,45 +15,8 @@ import { ToastService } from "./../../services/toast.service";
   styleUrls: ['./calculator.component.css'],
 })
 export class CalculatorComponent implements OnInit{
-  public details: CalculationDetails = {
-    ages: [],
-    startBalance: [],
-    contributions: [],
-    earnings: [],
-    fees: [],
-    tax: [],
-    withdrawals: [],
-    endBalance: []
-  };
-  public user: User = {
-    preconditions: {
-      startBalance: 0,
-      firstYear: 0,
-      lastYear: 0,
-      ageOfFirstYear: 0,
-      ageOfCurrentYear: 0
-    },
-    inputs: {
-      salary: 0,
-      contributionRate: 0,
-      inflationRate: 0,
-      earningsRate: 0,
-      feesRate: 0,
-      taxRate: 0,
-      withdrawalRate: 0,
-      retirementAge: 0
-    },
-    outputs: {
-      startBalance: 0,
-      contributions: 0,
-      earnings: 0,
-      fees: 0,
-      tax: 0,
-      withdrawals: 0,
-      endBalance: 0,
-    },
-    calculationDetails: this.details
-  };
+  public details: CalculationDetails;
+  public user: User;
   public balance: number[] = [];
   public years: string[] = [];
   public loadingPreconditions = true;
@@ -64,7 +27,47 @@ export class CalculatorComponent implements OnInit{
     public dataProcessService: DataProcessService, 
     private dataFetchService: DataFetchService, 
     private toastService: ToastService,
-  ) {}
+  ) {
+    this.details = {
+      ages: [],
+      startBalance: [],
+      contributions: [],
+      earnings: [],
+      fees: [],
+      tax: [],
+      withdrawals: [],
+      endBalance: []
+    };
+    this.user = {
+      preconditions: {
+        startBalance: 0,
+        firstYear: 0,
+        lastYear: 0,
+        ageOfFirstYear: 0,
+        ageOfCurrentYear: 0
+      },
+      inputs: {
+        salary: 0,
+        contributionRate: 0,
+        inflationRate: 0,
+        earningsRate: 0,
+        feesRate: 0,
+        taxRate: 0,
+        withdrawalRate: 0,
+        retirementAge: 0
+      },
+      outputs: {
+        startBalance: 0,
+        contributions: 0,
+        earnings: 0,
+        fees: 0,
+        tax: 0,
+        withdrawals: 0,
+        endBalance: 0,
+      },
+      calculationDetails: this.details
+    };
+  }
 
   ngOnInit(): void {
     this.fetchUserPreconditions();
