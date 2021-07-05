@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { ReplaySubject } from 'rxjs';
-import { UserPrecondictions } from '../interfaces/user.precondictions';
+import { UserPreconditions } from '../interfaces/user.preconditions';
 import { UserInputs } from './../interfaces/user.inputs';
 import { ToastService } from './toast.service';
 
@@ -11,12 +11,12 @@ const RETIREMENT_AGE = 66;
   providedIn: 'root',
 })
 export class DataFetchService {
-  private userPrecondictions = new ReplaySubject<UserPrecondictions>(1);
+  private userPreconditions = new ReplaySubject<UserPreconditions>(1);
   private userInputs = new ReplaySubject<UserInputs>(1);
-  public userPrecondictions$ = this.userPrecondictions.asObservable();
+  public userPreconditions$ = this.userPreconditions.asObservable();
   public userInputs$ = this.userInputs.asObservable();
 
-  private defaultPrecondictions: UserPrecondictions = {
+  private defaultPreconditions: UserPreconditions = {
     startBalance: 300000,
     firstYear: 2020,
     lastYear: 2070,
@@ -41,13 +41,13 @@ export class DataFetchService {
   }
 
   private fetchPreconditions() {
-    if (this.isDataValid(this.defaultPrecondictions)) {
+    if (this.isDataValid(this.defaultPreconditions)) {
       setTimeout(() => {
-        this.showSuccessNotification(this.defaultPrecondictions);
+        this.showSuccessNotification(this.defaultPreconditions);
       }, SECONDS_TO_FETCH_DATA);
     } else {
       setTimeout(() => {
-        this.showErrorNotification(this.defaultPrecondictions);
+        this.showErrorNotification(this.defaultPreconditions);
       }, SECONDS_TO_FETCH_DATA);
     }
   }
@@ -65,8 +65,8 @@ export class DataFetchService {
     }
   }
 
-  private isDataValid(data: UserPrecondictions | UserInputs) {
-    if (this.isInstanceOfUserPrecondictions(data)) {
+  private isDataValid(data: UserPreconditions | UserInputs) {
+    if (this.isInstanceOfUserPreconditions(data)) {
       return (
         data.startBalance >= 0 &&
         data.ageOfFirstYear >= 18 &&
@@ -86,8 +86,8 @@ export class DataFetchService {
     );
   }
 
-  private precondictionsAreInvalid(data: UserPrecondictions, errorMessagePostfix: string) {
-    const errorMessagePrefix = 'Something wrong with the fetch of precondictions.';
+  private preconditionsAreInvalid(data: UserPreconditions, errorMessagePostfix: string) {
+    const errorMessagePrefix = 'Something wrong with the fetch of preconditions.';
     if (data.startBalance < 0) {
       this.toastService.onErrorCall(`${errorMessagePrefix} Start balance of the first year should not be a negative number. ${errorMessagePostfix}`);
     }
@@ -130,30 +130,30 @@ export class DataFetchService {
     }
   }
 
-  private showSuccessNotification(data: UserPrecondictions | UserInputs) {
-    if (this.isInstanceOfUserPrecondictions(data)) {
-      this.toastService.onSuccessCall('Precondictions are fetched successfully.');
-      this.userPrecondictions.next(data);
+  private showSuccessNotification(data: UserPreconditions | UserInputs) {
+    if (this.isInstanceOfUserPreconditions(data)) {
+      this.toastService.onSuccessCall('Preconditions are fetched successfully.');
+      this.userPreconditions.next(data);
     } else if (this.isInstanceOfUser(data)) {
       this.toastService.onSuccessCall('User inputs are fetched successfully.');
       this.userInputs.next(data);
     }
   }
 
-  private showErrorNotification(data: UserPrecondictions | UserInputs) {
+  private showErrorNotification(data: UserPreconditions | UserInputs) {
     const errorMessagePostfix = 'Please contact administrator for help.';
-    if (this.isInstanceOfUserPrecondictions(data)) {
-      this.precondictionsAreInvalid(data, errorMessagePostfix);
+    if (this.isInstanceOfUserPreconditions(data)) {
+      this.preconditionsAreInvalid(data, errorMessagePostfix);
     } else if (this.isInstanceOfUser(data)) {
       this.userDataIsInvalid(data, errorMessagePostfix);
     }
   }
 
-  private isInstanceOfUserPrecondictions(data: UserPrecondictions | UserInputs): data is UserPrecondictions {
+  private isInstanceOfUserPreconditions(data: UserPreconditions | UserInputs): data is UserPreconditions {
     return data.hasOwnProperty('startBalance');
   }
 
-  private isInstanceOfUser(data: UserPrecondictions | UserInputs): data is UserInputs {
+  private isInstanceOfUser(data: UserPreconditions | UserInputs): data is UserInputs {
     return data.hasOwnProperty('salary');
   }
 }

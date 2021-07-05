@@ -1,4 +1,4 @@
-export interface UserPrecondictions {
+export interface UserPreconditions {
     startBalance: number;
     firstYear: number;
     lastYear: number;

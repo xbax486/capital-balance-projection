@@ -1,7 +1,7 @@
-import { UserPrecondictions } from "./user.precondictions";
+import { UserPreconditions } from "./user.preconditions";
 import { UserInputs } from "./user.inputs";
 
 export interface CalculatorFormDetails {
-    precondictions: UserPrecondictions;
+    preconditions: UserPreconditions;
     inputs: UserInputs;
 }

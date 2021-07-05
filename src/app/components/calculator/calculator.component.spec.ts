@@ -3,7 +3,7 @@ import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { ReplaySubject } from 'rxjs';
 import { User } from '../../interfaces/user';
-import { UserPrecondictions } from '../../interfaces/user.precondictions';
+import { UserPreconditions } from '../../interfaces/user.preconditions';
 import { UserInputs } from '../../interfaces/user.inputs';
 import { CalculatorComponent } from './calculator.component';
 import { DataProcessService } from './../../services/data-process.service';
@@ -20,7 +20,7 @@ fdescribe('CalculatorComponent', () => {
   let dataFetchServiceSpy: any;
   let toastServiceSpy: any;
   let user: User = {
-    precondictions: {
+    preconditions: {
       startBalance: 300000,
       firstYear: 2020,
       lastYear: 2070,
@@ -75,18 +75,18 @@ fdescribe('CalculatorComponent', () => {
         'fetchPreconditions',
         'fetchUserInputs',
         'isDataValid',
-        'precondictionsAreInvalid',
+        'preconditionsAreInvalid',
         'userDataIsInvalid',
         'showSuccessNotification',
         'showErrorNotification',
-        'isInstanceOfUserPrecondictions',
+        'isInstanceOfUserPreconditions',
         'isInstanceOfUser',
       ]);
-      dataFetchServiceSpy.userPrecondictions =
-        new ReplaySubject<UserPrecondictions>(1);
+      dataFetchServiceSpy.userPreconditions =
+        new ReplaySubject<UserPreconditions>(1);
       dataFetchServiceSpy.userInputs = new ReplaySubject<UserInputs>(1);
-      dataFetchServiceSpy.userPrecondictions$ =
-        dataFetchServiceSpy.userPrecondictions.asObservable();
+      dataFetchServiceSpy.userPreconditions$ =
+        dataFetchServiceSpy.userPreconditions.asObservable();
       dataFetchServiceSpy.userInputs$ =
         dataFetchServiceSpy.userInputs.asObservable();
 
@@ -181,7 +181,7 @@ fdescribe('CalculatorComponent', () => {
   });
 
   it('should return correct earnings when getEndBalance() is called in the first year', () => {
-    user.precondictions.startBalance = 300000;
+    user.preconditions.startBalance = 300000;
     user.outputs.contributions = 9500;
     user.outputs.earnings = 23213;
     user.outputs.fees = 4991;

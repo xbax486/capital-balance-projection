@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { NgForm } from '@angular/forms';
 import { User } from '../../interfaces/user';
 import { UserInputs } from './../../interfaces/user.inputs';
-import { UserPrecondictions } from './../../interfaces/user.precondictions';
+import { UserPreconditions } from './../../interfaces/user.preconditions';
 import { CalculationDetails } from './../../interfaces/calculation.details';
 import { CalculatorFormDetails } from '../../interfaces/calculator.form.details';
 import { DataProcessService } from './../../services/data-process.service';
@@ -26,7 +26,7 @@ export class CalculatorComponent implements OnInit{
     endBalance: []
   };
   public user: User = {
-    precondictions: {
+    preconditions: {
       startBalance: 0,
       firstYear: 0,
       lastYear: 0,
@@ -56,7 +56,7 @@ export class CalculatorComponent implements OnInit{
   };
   public balance: number[] = [];
   public years: string[] = [];
-  public loadingPrecondictions = true;
+  public loadingPreconditions = true;
   public loadingUserInputs = true;
   public calculationCompleted = false;
 
@@ -67,7 +67,7 @@ export class CalculatorComponent implements OnInit{
   ) {}
 
   ngOnInit(): void {
-    this.fetchUserPrecondictions();
+    this.fetchUserPreconditions();
     this.fetchUserInputs();
   }
 
@@ -78,7 +78,7 @@ export class CalculatorComponent implements OnInit{
   }
 
   getContributions(year: number, user: User) {
-    user.outputs.contributions = user.precondictions.ageOfCurrentYear >= user.inputs.retirementAge ? 
+    user.outputs.contributions = user.preconditions.ageOfCurrentYear >= user.inputs.retirementAge ? 
       0 : user.inputs.salary * this.dataProcessService.toPercentage(user.inputs.contributionRate) * Math.pow(1 + this.dataProcessService.toPercentage(user.inputs.inflationRate), year - 1);
     return user.outputs.contributions;
   }
@@ -102,7 +102,7 @@ export class CalculatorComponent implements OnInit{
 
   getWithdrawals(year: number, user: User) {
     let startBalance = this.getStartBalance(year, user);
-    user.outputs.withdrawals = this.user.precondictions.ageOfCurrentYear < this.user.inputs.retirementAge ? 
+    user.outputs.withdrawals = this.user.preconditions.ageOfCurrentYear < this.user.inputs.retirementAge ? 
       0 : startBalance * this.dataProcessService.toPercentage(user.inputs.withdrawalRate);
     return user.outputs.withdrawals;
   }
@@ -115,20 +115,20 @@ export class CalculatorComponent implements OnInit{
   }
 
   private getStartBalance(year: number, user: User) {
-    return year == 1 ? user.precondictions.startBalance : user.outputs.startBalance;
+    return year == 1 ? user.preconditions.startBalance : user.outputs.startBalance;
   }
 
   private calculate(details: CalculatorFormDetails) {
-    let startAge = details.precondictions.ageOfFirstYear;
-    let endAge = details.precondictions.lastYear - details.precondictions.firstYear + details.precondictions.ageOfFirstYear;
+    let startAge = details.preconditions.ageOfFirstYear;
+    let endAge = details.preconditions.lastYear - details.preconditions.firstYear + details.preconditions.ageOfFirstYear;
     let currentStartBalance = 0;
     for(var index = startAge; index <= endAge; index++) {
       let year = index - startAge + 1;
-      this.user.precondictions.ageOfCurrentYear = index;
+      this.user.preconditions.ageOfCurrentYear = index;
       this.user.calculationDetails.ages.push(index);
       currentStartBalance = this.getStartBalance(year, this.user);
       this.balance.push(Math.round(currentStartBalance));
-      this.years.push((details.precondictions.firstYear + year - 1).toString());
+      this.years.push((details.preconditions.firstYear + year - 1).toString());
       this.user.calculationDetails.startBalance.push(Math.round(currentStartBalance));
       this.user.calculationDetails.contributions.push(Math.round(this.getContributions(year, this.user)));
       this.user.calculationDetails.earnings.push(Math.round(this.getEarnings(year, this.user)));
@@ -152,14 +152,14 @@ export class CalculatorComponent implements OnInit{
     this.user.calculationDetails.endBalance = [];
   }
 
-  private fetchUserPrecondictions() {
-    this.dataFetchService.userPrecondictions$.subscribe(
-      (userPrecondictions: UserPrecondictions) => {
-        this.loadingPrecondictions = false;
-        this.user.precondictions = userPrecondictions;
+  private fetchUserPreconditions() {
+    this.dataFetchService.userPreconditions$.subscribe(
+      (userPreconditions: UserPreconditions) => {
+        this.loadingPreconditions = false;
+        this.user.preconditions = userPreconditions;
       },
       (error) =>{
-        this.toastService.onErrorCall('Fail to fetch precondictions. Please contact administrator.')
+        this.toastService.onErrorCall('Fail to fetch preconditions. Please contact administrator.')
       }
     );
   }
