@@ -176,36 +176,36 @@ Last but not least, I also have a simple function **resetAllDataArrays()**, whic
 
 ### LineChartComponent
 
-    This is the pure component, which only receives data from **CalculatorComponent**. Since **CalculatorComponent** also passes **calculationCompleted** which indicate whether the preconditions and default inputs fetching are done, **LineChartComponent** would not show up until the fetching are completed.
+This is the pure component, which only receives data from **CalculatorComponent**. Since **CalculatorComponent** also passes **calculationCompleted** which indicate whether the preconditions and default inputs fetching are done, **LineChartComponent** would not show up until the fetching are completed.
 
-    The most important function is **drawChart()** which calls the **Chart()** function to create the line chart with passed data. Also, please be aware of the life cycle functions **ngAfterViewInit** and **ngOnChanges**.
+The most important function is **drawChart()** which calls the **Chart()** function to create the line chart with passed data. Also, please be aware of the life cycle functions **ngAfterViewInit** and **ngOnChanges**.
 
-    The only reason why **drawChart()** is called inside **ngAfterViewInit** is to make sure that every time it creates the chart, it always destroy the old one. If we do not do so, then after you update the inputs and hit the submit button is clicked, a new chart would be created while the old chart exists. Although you might not be able to see it since there is always one chart on the page, you would notice both the chart and the data change when your mouse hover over the points inside the chart. I have tried to use **chart.update()** according to the ChartJS library, but sometimes it still happens. In order to avoid this bug, I have to call the function **drawChart()** to create a chart the first time. Since there is no data passed at the moment, the chart would not appear.
+The only reason why **drawChart()** is called inside **ngAfterViewInit** is to make sure that every time it creates the chart, it always destroy the old one. If we do not do so, then after you update the inputs and hit the submit button is clicked, a new chart would be created while the old chart exists. Although you might not be able to see it since there is always one chart on the page, you would notice both the chart and the data change when your mouse hover over the points inside the chart. I have tried to use **chart.update()** according to the ChartJS library, but sometimes it still happens. In order to avoid this bug, I have to call the function **drawChart()** to create a chart the first time. Since there is no data passed at the moment, the chart would not appear.
 
-    **ngOnChanges** is just to make sure the chart is destroyed and recreated when the data passed from **CalculatorComponent** are updated.
+**ngOnChanges** is just to make sure the chart is destroyed and recreated when the data passed from **CalculatorComponent** are updated.
 
 ### DetailsTableComponent
 
-    This is the pure component, which only receives data from **CalculatorComponent**. Since **CalculatorComponent** also passes **calculationCompleted** which indicate whether the preconditions and default inputs fetching are done, **LineChartComponent** would not show up until the fetching are completed.
+This is the pure component, which only receives data from **CalculatorComponent**. Since **CalculatorComponent** also passes **calculationCompleted** which indicate whether the preconditions and default inputs fetching are done, **LineChartComponent** would not show up until the fetching are completed.
 
 ## HTML And CSS
 
-    To keep things simple, I choose Bootstrap 5 for the markup handling so the entire app is fully responsive. Please try to view it on different sizes of browser. The are only a few custom styles in the css file I need for each component since most of the styles are handled by Boostrap and ChartJS, I create the Angular app with option CSS for styling. If you have a lot of different styles, please feel free to use other CSS preprocessors like SASS or LESS.
+To keep things simple, I choose Bootstrap 5 for the markup handling so the entire app is fully responsive. Please try to view it on different sizes of browser. The are only a few custom styles in the css file I need for each component since most of the styles are handled by Boostrap and ChartJS, I create the Angular app with option CSS for styling. If you have a lot of different styles, please feel free to use other CSS preprocessors like SASS or LESS.
 
 ## Inputs Form
 
-    Again, another reason to use Bootstrap cause it could provide you with a beautiful style for basic form. In terms of input checking, I do have the basic ones with error message showing. So I choose template driven form method because I do not need complex validations. If you think you need some custom validations or async validations, please feel free to use reactive forms method. In addition, I also have an interface **CalculatorFormDetails** related to the form. Please check the **CalculatorComponent** to see how it is used.
+Again, another reason to use Bootstrap cause it could provide you with a beautiful style for basic form. In terms of input checking, I do have the basic ones with error message showing. So I choose template driven form method because I do not need complex validations. If you think you need some custom validations or async validations, please feel free to use reactive forms method. In addition, I also have an interface **CalculatorFormDetails** related to the form. Please check the **CalculatorComponent** to see how it is used.
 
 ## Services
 
-    There are three services in the services folder, **DataFetchService** , **DataProcessService** and **ToastService**.
+There are three services in the services folder, **DataFetchService** , **DataProcessService** and **ToastService**.
 
-    **DataFetchService** is for fetching preconditions as well as default inputs. Sicne most of the time we will call the API to fetch the data and it might take some time for it to complete, I use a timer and only broadcast these data after 3 seconds. To keep things simple, I use built-in function **setTimeout()** instead of creating an Observable. If you are going to work with a real API which will returns an Observable, please feel free to use **HttpClient** and you might need to update the code so that it matches the requirements of reactive programming, which create great user experience.
+**DataFetchService** is for fetching preconditions as well as default inputs. Sicne most of the time we will call the API to fetch the data and it might take some time for it to complete, I use a timer and only broadcast these data after 3 seconds. To keep things simple, I use built-in function **setTimeout()** instead of creating an Observable. If you are going to work with a real API which will returns an Observable, please feel free to use **HttpClient** and you might need to update the code so that it matches the requirements of reactive programming, which create great user experience.
 
-    **DataProcessService** is a service where the data processing functions like formatting and configurations such as the locale and currency are stored. With the help of this service, I could reuse the formatting functions in both **LineChartComponent** and **DetailsTableComponent**.
+**DataProcessService** is a service where the data processing functions like formatting and configurations such as the locale and currency are stored. With the help of this service, I could reuse the formatting functions in both **LineChartComponent** and **DetailsTableComponent**.
 
-    Finally, **ToastService** is a service where the functions to create toasty notifcations are kept. In my app, I use it to show the result of the fetching of both the preconditions and the default inputs. With the help of these notifications, the user would better understand the current status of the app when the fetching is either successful or not.
+Finally, **ToastService** is a service where the functions to create toasty notifcations are kept. In my app, I use it to show the result of the fetching of both the preconditions and the default inputs. With the help of these notifications, the user would better understand the current status of the app when the fetching is either successful or not.
 
 ## Unit tests
 
-    Since time limitation, I only write a few tests in the app, which target the essential functions in **CalculatorFormDetails** and **DataProcessService**. For **LineChartComponent** and **DetailsTableComponent** as well as other parts like the services, please feel free to complete the unit tests.
+Since time limitation, I only write a few tests in the app, which target the essential functions in **CalculatorFormDetails** and **DataProcessService**. For **LineChartComponent** and **DetailsTableComponent** as well as other parts like the services, please feel free to complete the unit tests.
