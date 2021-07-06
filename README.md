@@ -216,8 +216,12 @@ Since time limitation, I only write a few tests in the app, which target the ess
 
 ### Step 1: Loading preconditions and default inputs
 
-![alt text](https://drive.google.com/file/d/1sxjendKzpCPeP5SWsae-yzfPlyBs2TDs/view?usp=sharing "Loading preconditions and default inputs")
+![alt text](https://drive.google.com/uc?export=view&id=1Hn0kGFaeFHpb3DqVs5PI_8x9TRX3o3iC "Loading preconditions and default inputs")
 
 ### Step 2: Preconditions and default inputs loading completes
 
+![alt text](https://drive.google.com/uc?export=view&id=1sxjendKzpCPeP5SWsae-yzfPlyBs2TDs "Preconditions and default inputs loading completes")
+
 ### Step 3: Calculation completes after clicking the 'Submit' button
+
+![alt text](https://drive.google.com/uc?export=view&id=1PoCKOefwkmxClJhO56ifT3fk_JaZtBVR "Calculation completes after clicking the 'Submit' button")
