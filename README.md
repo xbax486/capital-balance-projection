@@ -216,6 +216,8 @@ Since time limitation, I only write a few tests in the app, which target the ess
 
 ### Step 1: Loading preconditions and default inputs
 
+![alt text](https://drive.google.com/file/d/1sxjendKzpCPeP5SWsae-yzfPlyBs2TDs/view?usp=sharing "Loading preconditions and default inputs")
+
 ### Step 2: Preconditions and default inputs loading completes
 
 ### Step 3: Calculation completes after clicking the 'Submit' button
