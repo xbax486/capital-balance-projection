@@ -190,7 +190,7 @@ This is the pure component, which only receives data from **CalculatorComponent*
 
 ## HTML And CSS
 
-To keep things simple, I choose Bootstrap 5 for the markup handling so the entire app is fully responsive. Please try to view it on different sizes of browser. The are only a few custom styles in the css file I need for each component since most of the styles are handled by Boostrap and ChartJS, I create the Angular app with option CSS for styling. If you have a lot of different styles, please feel free to use other CSS preprocessors like SASS or LESS.
+To keep things simple, I choose Bootstrap 5 for the markup handling so the entire app is fully responsive. Please try to view it on different sizes of browser. The are only a few custom styles in the css file I need for each component since most of the styles are handled by Boostrap and ChartJS, I create the Angular app with option CSS for styling. If you have a lot of different styles, please feel free to use other CSS preprocessors like [SASS](https://sass-lang.com/) or [LESS](https://lesscss.org/).
 
 In addition, please notice that the types of all the input fields are number, except for the salary one which is text. The reason why I choose number type is to allow the user to quickly update the inputs via the clicking on the arrow key when the field is hovered or via the keyboard up and down arrow keys. The text type of the salary input is to format the field as currency, which is the same format used in line chart and details table.
 
