@@ -218,6 +218,8 @@ Because of time limitations, I only write a few tests for the Angular applicatio
 
 ## Screenshots of each stage
 
+#### (Please try to use Ctrl+F5 to refresh the github page if you cannot see the screenshots. Sometimes it happens and a few refresh trials should get the work done)
+
 ### Stage 1: Loading preconditions and default inputs
 
 ![alt text](https://drive.google.com/uc?export=view&id=1Hn0kGFaeFHpb3DqVs5PI_8x9TRX3o3iC "Loading preconditions and default inputs")
