@@ -192,6 +192,8 @@ This is the pure component, which only receives data from **CalculatorComponent*
 
 To keep things simple, I choose Bootstrap 5 for the markup handling so the entire app is fully responsive. Please try to view it on different sizes of browser. The are only a few custom styles in the css file I need for each component since most of the styles are handled by Boostrap and ChartJS, I create the Angular app with option CSS for styling. If you have a lot of different styles, please feel free to use other CSS preprocessors like SASS or LESS.
 
+In addition, please notice that the types of all the input fields are number, except for the salary one which is text. The reason why I choose number type is to allow the user to quickly update the inputs via the clicking on the arrow key when the field is hovered or via the keyboard up and down arrow keys. The text type of the salary input is to format the field as currency, which is the same format used in line chart and details table.
+
 ## Inputs Form
 
 Again, another reason to use Bootstrap cause it could provide you with a beautiful style for basic form. In terms of input checking, I do have the basic ones with error message showing. So I choose template driven form method because I do not need complex validations. If you think you need some custom validations or async validations, please feel free to use reactive forms method. In addition, I also have an interface **CalculatorFormDetails** related to the form. Please check the **CalculatorComponent** to see how it is used.
@@ -209,3 +211,11 @@ Finally, **ToastService** is a service where the functions to create toasty noti
 ## Unit tests
 
 Since time limitation, I only write a few tests in the app, which target the essential functions in **CalculatorFormDetails** and **DataProcessService**. For **LineChartComponent** and **DetailsTableComponent** as well as other parts like the services, please feel free to complete the unit tests.
+
+## Screenshots of each stage
+
+### Step 1: Loading preconditions and default inputs
+
+### Step 2: Preconditions and default inputs loading completes
+
+### Step 3: Calculation completes after clicking the 'Submit' button
