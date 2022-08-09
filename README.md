@@ -215,19 +215,3 @@ Finally, **ToastService** is a service where the functions to create toasty noti
 ## Unit tests
 
 Because of time limitations, I only write a few tests for the Angular application, which target the essential functions in **CalculatorFormDetails** and **DataProcessService**. For **LineChartComponent** and **DetailsTableComponent** as well as other parts like the services, please feel free to complete the unit tests.
-
-## Screenshots of each stage
-
-#### (Please try to use Ctrl+F5 to refresh the github page if you cannot see the screenshots. Sometimes it happens and a few refresh trials should get the work done)
-
-### Stage 1: Loading preconditions and default inputs
-
-![alt text](https://drive.google.com/uc?export=view&id=1Hn0kGFaeFHpb3DqVs5PI_8x9TRX3o3iC "Loading preconditions and default inputs")
-
-### Stage 2: Preconditions and default inputs loading completes
-
-![alt text](https://drive.google.com/uc?export=view&id=1sxjendKzpCPeP5SWsae-yzfPlyBs2TDs "Preconditions and default inputs loading completes")
-
-### Stage 3: Calculation completes after clicking the 'Submit' button
-
-![alt text](https://drive.google.com/uc?export=view&id=1PoCKOefwkmxClJhO56ifT3fk_JaZtBVR "Calculation completes after clicking the 'Submit' button")
